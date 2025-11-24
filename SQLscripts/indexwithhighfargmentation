@@ -1,0 +1,16 @@
+CREATE EXTENSION IF NOT EXISTS pgstattuple;
+SELECT
+    i.schemaname AS schema_name,
+    i.relname AS table_name,
+    i.indexrelname AS index_name,
+    pg_size_pretty(pg_relation_size(i.indexrelid)) AS index_size,
+    ROUND(100 * s.avg_leaf_density::numeric, 2) AS avg_leaf_density,
+    ROUND(100 - s.avg_leaf_density::numeric, 2) AS fragmentation_pct
+FROM pg_stat_all_indexes i
+JOIN pg_class c ON c.oid = i.indexrelid
+JOIN pg_am am   ON am.oid = c.relam
+JOIN LATERAL pgstatindex(i.indexrelid) AS s ON TRUE
+WHERE i.schemaname NOT IN ('pg_catalog','pg_toast','information_schema')
+  AND am.amname = 'btree'
+  AND ROUND(100 - s.avg_leaf_density::numeric, 2) > 30
+ORDER BY fragmentation_pct DESC;
