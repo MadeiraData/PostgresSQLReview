@@ -1,0 +1,16 @@
+SELECT
+    pc.oid,
+    pn.nspname,
+    pc.relname,
+    pa.rolname,
+    pg_size_pretty((pgstattuple(pc.oid)).table_len) AS table_size,
+    pg_size_pretty((pgstattuple(pc.oid)).free_space) AS table_free_space,
+    ROUND((pgstattuple(pc.oid)).dead_tuple_percent::numeric,1) AS dead_tuple_percent
+FROM pg_class pc
+JOIN pg_namespace pn ON pc.relnamespace = pn.oid
+JOIN pg_roles pa ON pc.relowner = pa.oid
+WHERE pc.relkind = 'r'
+  AND pc.relpages > 131072 -- ~1 GB
+  AND ROUND((pgstattuple(pc.oid)).dead_tuple_percent::numeric) > 1
+  AND pn.nspname NOT IN ('pg_catalog','information_schema','pg_toast')
+ORDER BY 7 DESC;
