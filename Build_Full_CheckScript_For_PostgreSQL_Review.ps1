@@ -8,8 +8,8 @@
 ,[string]$CheckScriptsFolderPath = "SQLChecks\*"
 ,[string]$CheckScriptsFilter = "*.sql"
 )
-cls
-Set-ExecutionPolicy bypass -Scope Process -force
+
+Set-ExecutionPolicy Bypass -Scope Process -Force
 
 $batchSeparator = "`r`n`r`n"
 $OutputScriptBuilder = [string](Get-Content -Path $TemplateHeaderFilePath -Raw)
