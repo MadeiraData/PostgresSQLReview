@@ -164,6 +164,8 @@ PostgreSQL Review results are collected from the database where the script was e
 Cluster-level findings apply to the PostgreSQL cluster.
 Database-level, schema-level, table-level, index-level, extension-level, and pg_stat_statements findings apply only to CurrentDatabase unless the JSON explicitly states otherwise.
 
+You can get multiple json files, in that case separate the results by database and only results from that specific database
+
 If the SystemIntroduction contains a Databases list, present it as environment context only.
 Do not imply that object-level checks were executed against all listed databases.
 
