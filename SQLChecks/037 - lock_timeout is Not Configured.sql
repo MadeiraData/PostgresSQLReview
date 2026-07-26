@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Configuration: lock_timeout is not configured. This allows sessions to wait
+   What This Means: lock_timeout is not configured. This allows sessions to wait
    indefinitely when attempting to acquire locks held by other transactions.
 
    WHY THIS MATTERS:
@@ -8,11 +9,14 @@
    from waiting forever on lock contention and allows applications to handle
    blocking situations more predictably.
 
-   REMEDIATION:
+   Recommendations:
    Consider configuring lock_timeout to a value appropriate for the workload.
    Evaluate application retry logic and transaction patterns before enabling
    lock timeouts in production. Different values may be appropriate at the
    role, database, or application level.
+
+   Scope : Cluster-level
+   Category : Performance
 
    REFERENCES:
    https://www.postgresql.org/docs/current/runtime-config-client.html

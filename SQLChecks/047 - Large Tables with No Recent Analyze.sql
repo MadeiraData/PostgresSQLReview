@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Maintenance: large tables have not been analyzed recently. This may indicate
+   What This Means: large tables have not been analyzed recently. This may indicate
    stale planner statistics on important tables.
 
    WHY THIS MATTERS:
@@ -7,11 +8,14 @@
    large tables are not analyzed regularly, the planner may make poor estimates,
    choose inefficient joins or scans, and cause query performance regressions.
 
-   REMEDIATION:
+   Recommendations:
    Review large tables with no recent analyze activity. Confirm that autovacuum
    and autoanalyze are enabled and keeping up. Consider running ANALYZE manually
    for affected tables and tuning table-level autovacuum analyze thresholds for
    high-change or large tables.
+
+   Scope : Database-level
+   Category : Performance
 
    REFERENCES:
    https://www.postgresql.org/docs/current/sql-analyze.html

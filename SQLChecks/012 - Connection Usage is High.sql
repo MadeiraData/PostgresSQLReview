@@ -1,7 +1,29 @@
+/*
+    DESCRIPTION:
 
-/* ============================================================
-   CHECK: Connection Usage is High
-   ============================================================ */
+    What This Means: PostgreSQL connection usage is high (active connections are
+        approaching max_connections). As usage nears the limit, the cluster risks
+        rejecting new connections with "FATAL: too many connections", including
+        the connections reserved for superuser/administrative tasks.
+
+    Recommendations:
+        Review application connection behavior, idle-in-transaction sessions, and
+        long-lived idle connections. Introduce or tune a connection pooler
+        (e.g. PgBouncer) so many client connections share a small pool of backend
+        connections, rather than raising max_connections indiscriminately.
+        Raising max_connections increases per-backend memory (work_mem, shared
+        memory overhead) and should only be done after benchmarking and with
+        adequate RAM headroom. Always keep superuser_reserved_connections
+        available for administrative access.
+
+    Scope : cluster-level
+    Category : Connections
+
+    More info:
+        https://www.postgresql.org/docs/current/runtime-config-connection.html#GUC-MAX-CONNECTIONS
+        https://www.postgresql.org/docs/current/monitoring-stats.html#MONITORING-PG-STAT-ACTIVITY-VIEW
+        https://www.pgbouncer.org/config.html
+*/
 
 v_AdditionalInfo :=
 (

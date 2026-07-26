@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Performance: tables with high sequential scan activity were found. These
+   What This Means: tables with high sequential scan activity were found. These
    tables are being scanned sequentially frequently, which may indicate missing
    indexes, inefficient query predicates, reporting workloads, or normal access
    patterns for small tables.
@@ -10,12 +11,15 @@
    should be reviewed together with table size, rows read, index usage, and query
    patterns before deciding whether indexing or query tuning is required.
 
-   REMEDIATION:
+   Recommendations:
    Review tables with high sequential scan activity. Use pg_stat_statements,
    execution plans, and application query patterns to identify whether indexes,
    query rewrites, partitioning, or statistics improvements are needed. Do not
    add indexes automatically, especially for small tables or intentional
    reporting scans.
+
+   Scope : Database-level
+   Category : Performance
 
    REFERENCES:
    https://www.postgresql.org/docs/current/monitoring-stats.html

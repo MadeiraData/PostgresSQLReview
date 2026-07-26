@@ -1,12 +1,16 @@
 
 /*
     DESCRIPTION:
-        Observability: pg_stat_statements is missing or not fully enabled.
+
+    What This Means: pg_stat_statements is missing or not fully enabled.
         Without it, workload-level query analysis is limited.
 
-    Remediation:
+    Recommendations:
         Enable pg_stat_statements using the appropriate PostgreSQL or managed-service configuration.
         This may require shared_preload_libraries, a restart, and CREATE EXTENSION in relevant databases.
+
+    Scope : cluster-level
+    Category : Monitor
 
     More info:
         https://www.postgresql.org/docs/current/pgstatstatements.html
@@ -106,7 +110,7 @@ SELECT
         WHEN v_AdditionalInfo IS NULL
             THEN 0  -- None
         ELSE
-            2  -- Medium
+            1  -- Low
     END,
     CASE
         WHEN v_AdditionalInfo IS NULL

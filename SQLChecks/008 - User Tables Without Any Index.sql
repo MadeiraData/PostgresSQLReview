@@ -1,12 +1,14 @@
-
 /*
     DESCRIPTION:
-        Schema design: user tables were found without any indexes.
+        What This Means: user tables were found without any indexes.
         This may cause full table scans and poor performance as data grows.
 
-    Remediation:
+    Recommendations:
         Review access patterns before adding indexes.
         For large active tables, prefer CREATE INDEX CONCURRENTLY where appropriate.
+
+    Scope : Database-level
+    Category : Performance
 
     More info:
         https://www.postgresql.org/docs/current/indexes.html

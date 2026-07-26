@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   WAL configuration: max_wal_size appears to be too small. A low max_wal_size
+   What This Means: max_wal_size appears to be too small. A low max_wal_size
    can cause PostgreSQL to perform checkpoints too frequently.
 
    WHY THIS MATTERS:
@@ -8,11 +9,14 @@
    a small max_wal_size may prevent PostgreSQL from spreading checkpoint writes
    smoothly over time.
 
-   REMEDIATION:
+   Recommendations:
    Review max_wal_size together with checkpoint frequency, checkpoint_timeout,
    checkpoint_completion_target, WAL generation rate, storage performance, and
    available disk capacity. Consider increasing max_wal_size if checkpoints are
    occurring too frequently or are caused by WAL volume rather than timeout.
+
+   Scope : Cluster-level
+   Category : Performance
 
    REFERENCES:
    https://www.postgresql.org/docs/current/runtime-config-wal.html

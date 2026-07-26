@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Maintenance: autovacuum_naptime may not be appropriate for the workload.
+   What This Means: autovacuum_naptime may not be appropriate for the workload.
    A large autovacuum_naptime increases the time between autovacuum launcher
    cycles, potentially delaying vacuum and analyze activity.
 
@@ -9,11 +10,14 @@
    to table bloat, index bloat, suboptimal query plans, and increased
    maintenance pressure on busy systems.
 
-   REMEDIATION:
+   Recommendations:
    Review autovacuum_naptime together with table churn, autovacuum worker
    capacity, dead tuple growth, and maintenance activity. Consider reducing
    autovacuum_naptime if vacuum and analyze operations are not keeping pace
    with workload changes.
+
+   Scope : Cluster-level
+   Category : Maintenance
 
    REFERENCES:
    https://www.postgresql.org/docs/current/runtime-config-autovacuum.html

@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Maintenance: invalid indexes exist in the database. Invalid indexes may be
+   What This Means: invalid indexes exist in the database. Invalid indexes may be
    left behind by failed CREATE INDEX CONCURRENTLY, REINDEX CONCURRENTLY, or
    interrupted index maintenance operations.
 
@@ -8,9 +9,12 @@
    execution, but they can still consume disk space and create operational
    confusion. They may also indicate a failed or incomplete maintenance task.
 
-   REMEDIATION:
+   Recommendations:
    Review each invalid index. If the index is still required, rebuild it using
    REINDEX INDEX CONCURRENTLY or recreate it. If it is not required, drop it.
+
+   Scope : Database-level
+   Category : Performance
 
    REFERENCES:
    https://www.postgresql.org/docs/current/catalog-pg-index.html

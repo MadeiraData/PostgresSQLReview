@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Configuration: effective_cache_size appears to be very small. This may cause
+   What This Means: effective_cache_size appears to be very small. This may cause
    the PostgreSQL planner to underestimate the amount of data likely to be
    cached by PostgreSQL and the operating system.
 
@@ -8,11 +9,14 @@
    If it is too low, PostgreSQL may avoid index scans even when they would be
    beneficial, potentially leading to inefficient query plans.
 
-   REMEDIATION:
+   Recommendations:
    Review effective_cache_size together with total server RAM, shared_buffers,
    operating system cache, workload type, and concurrent services on the server.
    For dedicated PostgreSQL servers, configure it to reflect the estimated memory
    available for caching data.
+
+   Scope : Cluster-level
+   Category : Performance
 
    REFERENCES:
    https://www.postgresql.org/docs/current/runtime-config-query.html

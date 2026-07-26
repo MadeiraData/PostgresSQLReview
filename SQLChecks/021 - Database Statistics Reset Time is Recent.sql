@@ -1,18 +1,22 @@
+
 /*
     DESCRIPTION:
-        Observability: Database statistics reset time is recent.
+        What This Means: Database statistics reset time is recent.
 
         PostgreSQL cumulative statistics in pg_stat_database can be reset manually
         using pg_stat_reset() or by certain operational actions. A recent reset can
         make performance, activity, temporary file usage, transaction, block I/O,
         and cache hit ratio metrics incomplete or misleading.
 
-    Remediation:
+    Recommendations:
         Confirm whether the statistics reset was expected.
         If the reset was planned, treat current cumulative statistics as partial
         since the reset time.
         If the reset was unexpected, investigate who or what reset the statistics
         and review monitoring or maintenance automation.
+
+    Scope : Database-level
+    Category : Performance
 
     More info:
         https://www.postgresql.org/docs/current/monitoring-stats.html

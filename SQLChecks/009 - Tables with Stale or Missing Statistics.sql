@@ -1,12 +1,14 @@
-
 /*
     DESCRIPTION:
-        Statistics: tables have stale or missing planner statistics.
+        What This Means: tables have stale or missing planner statistics.
         Stale statistics can lead to poor query plans and unstable performance.
 
-    Remediation:
+    Recommendations:
         Review autovacuum/analyze behavior and recent table changes.
         Run ANALYZE where appropriate and tune autovacuum if this repeats.
+
+    Scope : Database-level
+    Category : Performance
 
     More info:
         https://www.postgresql.org/docs/current/planner-stats.html

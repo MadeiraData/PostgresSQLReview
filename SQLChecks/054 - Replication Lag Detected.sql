@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Replication: replication lag was detected. One or more connected replicas
+   What This Means: replication lag was detected. One or more connected replicas
    appear to be behind the primary based on WAL write, flush, replay, or byte
    lag information.
 
@@ -10,11 +11,14 @@
    storage, replica resource pressure, long-running queries, or WAL apply
    bottlenecks.
 
-   REMEDIATION:
+   Recommendations:
    Review replication lag together with replica health, network latency,
    storage performance, WAL generation rate, long-running queries on replicas,
    replication slots, and PostgreSQL logs. Investigate replicas with high or
    increasing lag and confirm whether they are suitable for failover or reads.
+
+   Scope : Cluster-level
+   Category : Replication
 
    REFERENCES:
    https://www.postgresql.org/docs/current/monitoring-stats.html

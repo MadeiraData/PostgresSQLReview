@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Observability: track_io_timing is disabled. This prevents PostgreSQL from
+   What This Means: track_io_timing is disabled. This prevents PostgreSQL from
    collecting block read and write timing information for query and database
    activity.
 
@@ -8,10 +9,13 @@
    I/O-bound workloads and to diagnose slow queries, storage latency, cache
    efficiency, and read/write bottlenecks.
 
-   REMEDIATION:
+   Recommendations:
    Consider enabling track_io_timing, especially for production systems where
    query performance troubleshooting is important. Test overhead in the target
    environment before enabling globally.
+
+   Scope : Cluster-level
+   Category : Monitoring
 
    REFERENCES:
    https://www.postgresql.org/docs/current/runtime-config-statistics.html
@@ -52,7 +56,7 @@ SELECT
     'Cluster-level',
     CASE WHEN v_AdditionalInfo IS NULL THEN false ELSE true END,
     2,
-    CASE WHEN v_AdditionalInfo IS NULL THEN 0 ELSE 2 END,
+    CASE WHEN v_AdditionalInfo IS NULL THEN 0 ELSE 1 END,
     CASE WHEN v_AdditionalInfo IS NULL THEN 0 ELSE 1 END,
     CASE WHEN v_AdditionalInfo IS NULL THEN 0 ELSE 1 END,
     CASE

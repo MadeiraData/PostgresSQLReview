@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Maintenance: autovacuum worker capacity may be too low for the workload.
+   What This Means: autovacuum worker capacity may be too low for the workload.
    A low autovacuum_max_workers setting can limit how many tables PostgreSQL can
    vacuum or analyze concurrently.
 
@@ -9,11 +10,14 @@
    wraparound risk may increase. This is especially important on databases with
    many large or frequently updated tables.
 
-   REMEDIATION:
+   Recommendations:
    Review autovacuum_max_workers together with autovacuum_naptime,
    autovacuum_vacuum_cost_limit, autovacuum_vacuum_cost_delay, table churn,
    dead tuple counts, and server resources. Consider increasing worker capacity
    when many tables regularly require vacuum or analyze work.
+
+   Scope : Cluster-level
+   Category : Maintenance
 
    REFERENCES:
    https://www.postgresql.org/docs/current/runtime-config-autovacuum.html

@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Replication: inactive replication slots exist. These slots are not currently
+   What This Means: inactive replication slots exist. These slots are not currently
    connected to an active replication client but may still retain WAL.
 
    WHY THIS MATTERS:
@@ -8,11 +9,14 @@
    space is exhausted. This can cause database outages and interrupt backup or
    replication operations.
 
-   REMEDIATION:
+   Recommendations:
    Review each inactive replication slot and confirm whether it is still needed.
    Drop abandoned slots only after validating with the application, backup,
    replication, or CDC owner. For PostgreSQL versions that support it, consider
    max_slot_wal_keep_size to limit WAL retention risk.
+
+   Scope : Cluster-level
+   Category : Replication
 
    REFERENCES:
    https://www.postgresql.org/docs/current/view-pg-replication-slots.html

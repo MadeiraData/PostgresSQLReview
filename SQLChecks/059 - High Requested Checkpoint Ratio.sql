@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   WAL and checkpoints: a high requested checkpoint ratio was detected.
+   What This Means: a high requested checkpoint ratio was detected.
    PostgreSQL statistics show that a significant portion of checkpoints were
    requested checkpoints rather than timed checkpoints.
 
@@ -10,11 +11,14 @@
    high, or checkpoint tuning should be reviewed. This can lead to write I/O
    spikes and latency instability.
 
-   REMEDIATION:
+   Recommendations:
    Review max_wal_size, checkpoint_timeout, checkpoint_completion_target,
    WAL generation rate, log_checkpoints output, and storage latency. Consider
    increasing max_wal_size if requested checkpoints are frequent and caused by
    normal WAL volume rather than unusual workload spikes.
+
+   Scope : Cluster-level
+   Category : Backup
 
    REFERENCES:
    https://www.postgresql.org/docs/current/monitoring-stats.html

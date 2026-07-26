@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Backup and recovery: WAL archiving is disabled. This means PostgreSQL is not
+   What This Means: WAL archiving is disabled. This means PostgreSQL is not
    configured to archive completed WAL segments for point-in-time recovery.
 
    WHY THIS MATTERS:
@@ -8,10 +9,13 @@
    available, and recovery options after data corruption, accidental changes, or
    operational mistakes may be reduced.
 
-   REMEDIATION:
+   Recommendations:
    Enable archive_mode and configure a reliable archive_command or archive
    library according to the backup architecture. Validate that archived WAL files
    are being stored safely and that restore testing is performed regularly.
+
+   Scope : Cluster-level
+   Category : backup
 
    REFERENCES:
    https://www.postgresql.org/docs/current/runtime-config-wal.html
@@ -58,7 +62,7 @@ SELECT
     3,
     CASE WHEN v_AdditionalInfo IS NULL THEN 0 ELSE 3 END,
     CASE WHEN v_AdditionalInfo IS NULL THEN 0 ELSE 2 END,
-    CASE WHEN v_AdditionalInfo IS NULL THEN 0 ELSE 2 END,
+    CASE WHEN v_AdditionalInfo IS NULL THEN 0 ELSE 3 END,
     CASE
         WHEN v_AdditionalInfo IS NULL
             THEN 'WAL archiving is enabled.'

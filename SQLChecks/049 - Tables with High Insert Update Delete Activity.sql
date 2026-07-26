@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Workload: tables with high INSERT, UPDATE, and DELETE activity were found.
+   What This Means: tables with high INSERT, UPDATE, and DELETE activity were found.
    These tables experience significant write activity and may require closer
    maintenance, indexing, autovacuum, and bloat review.
 
@@ -9,11 +10,14 @@
    to table or index bloat. These tables are often the most important candidates
    for autovacuum tuning, index review, and performance monitoring.
 
-   REMEDIATION:
+   Recommendations:
    Review high-activity tables together with dead tuple counts, autovacuum
    history, table size, index count, query patterns, and application workload.
    Consider tuning table-level autovacuum settings, removing redundant indexes,
    and validating that write-heavy tables have appropriate maintenance capacity.
+
+   Scope : Database-level
+   Category : Performance
 
    REFERENCES:
    https://www.postgresql.org/docs/current/monitoring-stats.html

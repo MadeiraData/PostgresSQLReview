@@ -1,12 +1,14 @@
-
 /*
     DESCRIPTION:
-        Maintenance: large tables do not show recent autovacuum or autoanalyze activity.
+        What This Means: large tables do not show recent autovacuum or autoanalyze activity.
         Missing maintenance activity can lead to stale statistics and poor query plans.
 
-    Remediation:
+    Recommendations:
         Review autovacuum configuration and table-level storage parameters.
         Confirm whether manual maintenance or recent statistics reset explains the result.
+
+    Scope : Database-level
+    Category : Maintenance
 
     More info:
         https://www.postgresql.org/docs/current/monitoring-stats.html

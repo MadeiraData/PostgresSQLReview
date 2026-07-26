@@ -1,18 +1,21 @@
 /*
     DESCRIPTION:
-        Transactions: High rollback ratio detected in one or more databases.
+        What This Means: High rollback ratio detected in this database.
 
         A high rollback ratio means a significant percentage of transactions are
         being rolled back instead of committed. This can indicate application
         errors, failed transactions, deadlocks, lock timeouts, constraint violations,
         retry behavior, or inefficient transaction handling.
 
-    Remediation:
+    Recommendations:
         Review application logs and PostgreSQL logs for transaction errors.
         Investigate deadlocks, lock timeouts, statement timeouts, constraint
         violations, and application retry patterns.
         If the rollback volume is expected, document the reason and validate that
         it does not create unnecessary load.
+
+    Scope : Database-level
+    Category : Performance
 
     More info:
         https://www.postgresql.org/docs/current/monitoring-stats.html
@@ -30,7 +33,7 @@ v_AdditionalInfo :=
             WHEN COUNT(*) = 0 THEN NULL::jsonb
             ELSE jsonb_build_object
             (
-                'FindingReason', 'One or more databases have a high rollback ratio.',
+                'FindingReason', 'This database has a high rollback ratio.',
                 'ThresholdRollbackPercent', 10,
                 'MinimumTransactionCount', 1000,
                 'Databases',
@@ -62,7 +65,8 @@ v_AdditionalInfo :=
             )
         END
     FROM pg_stat_database
-    WHERE xact_commit + xact_rollback >= 1000
+    WHERE datname = current_database()
+      AND xact_commit + xact_rollback >= 1000
       AND
       (
           xact_rollback::numeric

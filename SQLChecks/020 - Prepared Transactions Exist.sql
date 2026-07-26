@@ -1,17 +1,20 @@
 /*
     DESCRIPTION:
-        Transactions: Prepared transactions exist in the PostgreSQL cluster.
+        What This Means: Prepared transactions exist in the PostgreSQL cluster.
 
         Prepared transactions are created by two-phase commit using PREPARE TRANSACTION.
         If they remain open for a long time, they can hold locks, retain transaction IDs,
         prevent vacuum cleanup, increase bloat, and create operational risk.
 
-    Remediation:
+    Recommendations:
         Review each prepared transaction and confirm whether it is still required.
         Commit or roll back old prepared transactions after validating with the
         owning application or transaction coordinator.
         If two-phase commit is not required, consider setting max_prepared_transactions
         to 0 after confirming application requirements.
+
+    Scope : Database-level
+    Category : Performance
 
     More info:
         https://www.postgresql.org/docs/current/sql-prepare-transaction.html

@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Performance: overlapping index candidates exist in the database. These are
+   What This Means: overlapping index candidates exist in the database. These are
    indexes where one index starts with the same leading columns as another
    index on the same table.
 
@@ -9,10 +10,13 @@
    waste disk space and increase write overhead for INSERT, UPDATE, DELETE,
    VACUUM, and autovacuum operations.
 
-   REMEDIATION:
+   Recommendations:
    Review each overlapping index pair. Do not automatically drop indexes.
    Validate query usage, uniqueness, constraints, predicates, sort order,
    included columns, and index-only scan behavior before removing any index.
+
+   Scope : Database-level
+   Category : Performance
 
    REFERENCES:
    https://www.postgresql.org/docs/current/indexes.html

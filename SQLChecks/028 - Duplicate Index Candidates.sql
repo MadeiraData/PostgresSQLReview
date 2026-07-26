@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Performance: duplicate index candidates exist in the database. These are
+   What This Means: duplicate index candidates exist in the database. These are
    indexes on the same table with the same indexed columns, expressions,
    predicates, access method, and uniqueness behavior.
 
@@ -8,10 +9,13 @@
    INSERT, UPDATE, DELETE, VACUUM, and autovacuum operations must maintain
    unnecessary index structures.
 
-   REMEDIATION:
+   Recommendations:
    Review each duplicate index group. Keep the index that is required by a
    constraint or actively used by queries, and drop redundant indexes only after
    validating usage and dependency requirements.
+
+   Scope : Database-level
+   Category : Performance
 
    REFERENCES:
    https://www.postgresql.org/docs/current/indexes.html

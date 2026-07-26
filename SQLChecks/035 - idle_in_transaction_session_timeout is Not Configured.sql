@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Configuration: idle_in_transaction_session_timeout is not configured. This
+   What This Means: idle_in_transaction_session_timeout is not configured. This
    allows sessions that are idle while holding an open transaction to remain
    open indefinitely.
 
@@ -8,11 +9,14 @@
    versions, increase table and index bloat, and contribute to transaction ID
    wraparound risk. They can also block DDL and other application activity.
 
-   REMEDIATION:
+   Recommendations:
    Configure idle_in_transaction_session_timeout to a reasonable value based on
    application behavior. Common starting values are several minutes for OLTP
    systems, but the value should be tested to avoid interrupting legitimate
    long-running workflows.
+
+   Scope : Cluster-level
+   Category : Performance
 
    REFERENCES:
    https://www.postgresql.org/docs/current/runtime-config-client.html

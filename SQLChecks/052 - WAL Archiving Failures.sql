@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Backup and recovery: WAL archiving failures were detected. PostgreSQL has
+   What This Means: WAL archiving failures were detected. PostgreSQL has
    attempted to archive completed WAL segments, but one or more archive attempts
    have failed.
 
@@ -9,11 +10,14 @@
    the desired recovery point, and the server may accumulate WAL files until
    disk space is exhausted.
 
-   REMEDIATION:
+   Recommendations:
    Review pg_stat_archiver, PostgreSQL logs, archive_command or archive library
    configuration, archive destination availability, permissions, storage
    capacity, and backup tooling. Resolve archive failures immediately and
    confirm that new WAL segments are archiving successfully.
+
+   Scope : Cluster-level
+   Category : Backup
 
    REFERENCES:
    https://www.postgresql.org/docs/current/monitoring-stats.html

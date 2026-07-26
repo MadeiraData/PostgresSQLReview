@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Observability: log_checkpoints is disabled. PostgreSQL is not configured to
+   What This Means: log_checkpoints is disabled. PostgreSQL is not configured to
    log checkpoint activity.
 
    WHY THIS MATTERS:
@@ -8,10 +9,13 @@
    performance issues related to checkpoint tuning, WAL volume, storage latency,
    or sudden bursts of disk writes.
 
-   REMEDIATION:
+   Recommendations:
    Enable log_checkpoints to improve visibility into checkpoint behavior.
    Review checkpoint_timeout, max_wal_size, checkpoint_completion_target, and
    storage performance when checkpoint activity appears excessive.
+
+   Scope : Cluster-level
+   Category : Monitoring
 
    REFERENCES:
    https://www.postgresql.org/docs/current/runtime-config-logging.html

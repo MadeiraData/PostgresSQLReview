@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Observability: log_lock_waits is disabled. PostgreSQL is not configured to
+   What This Means: log_lock_waits is disabled. PostgreSQL is not configured to
    log sessions that wait longer than deadlock_timeout while trying to acquire
    a lock.
 
@@ -9,10 +10,13 @@
    to identify blocking patterns, problematic transactions, migration issues,
    and queries that hold locks for too long.
 
-   REMEDIATION:
+   Recommendations:
    Enable log_lock_waits to improve visibility into lock contention. Review
    deadlock_timeout as well, because it controls how long PostgreSQL waits
    before logging lock waits when log_lock_waits is enabled.
+
+   Scope : Cluster-level
+   Category : Monitoring
 
    REFERENCES:
    https://www.postgresql.org/docs/current/runtime-config-logging.html
@@ -55,7 +59,7 @@ SELECT
     'Cluster-level',
     CASE WHEN v_AdditionalInfo IS NULL THEN false ELSE true END,
     2,
-    CASE WHEN v_AdditionalInfo IS NULL THEN 0 ELSE 2 END,
+    CASE WHEN v_AdditionalInfo IS NULL THEN 0 ELSE 1 END,
     CASE WHEN v_AdditionalInfo IS NULL THEN 0 ELSE 1 END,
     CASE WHEN v_AdditionalInfo IS NULL THEN 0 ELSE 1 END,
     CASE

@@ -1,12 +1,14 @@
-
 /*
     DESCRIPTION:
-        Maintenance: large tables show possible bloat indicators.
+        What This Means: large tables show possible bloat indicators.
         This is an approximate signal based on PostgreSQL statistics, not exact bloat measurement.
 
-    Remediation:
+    Recommendations:
         Investigate autovacuum behavior, table churn, and long transactions.
         Consider VACUUM, REINDEX CONCURRENTLY, pg_repack, or planned maintenance options.
+
+    Scope : Database-level
+    Category : Performance
 
     More info:
         https://www.postgresql.org/docs/current/monitoring-stats.html

@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Data modeling: user tables exist without a primary key.
+   What This Means: user tables exist without a primary key.
 
    WHY THIS MATTERS:
    Tables without a primary key can allow duplicate or hard-to-identify rows,
@@ -7,10 +8,13 @@
    and foreign key relationships. Primary keys also provide a clear row identity
    for operational and maintenance tasks.
 
-   REMEDIATION:
+   Recommendations:
    Review each table and define an appropriate primary key. If a natural key is
    not available, consider adding a surrogate key such as bigint identity or UUID,
    depending on application requirements.
+
+   Scope : Database-level
+   Category : Performance
 
    REFERENCES:
    https://www.postgresql.org/docs/current/ddl-constraints.html
@@ -84,9 +88,9 @@ SELECT
     'Database-level',
     CASE WHEN v_AdditionalInfo IS NULL THEN false ELSE true END,
     2,
-    CASE WHEN v_AdditionalInfo IS NULL THEN 0 ELSE 2 END,
-    CASE WHEN v_AdditionalInfo IS NULL THEN 0 ELSE 2 END,
-    CASE WHEN v_AdditionalInfo IS NULL THEN 0 ELSE 2 END,
+    CASE WHEN v_AdditionalInfo IS NULL THEN 0 ELSE 1 END,
+    CASE WHEN v_AdditionalInfo IS NULL THEN 0 ELSE 1 END,
+    CASE WHEN v_AdditionalInfo IS NULL THEN 0 ELSE 1 END,
     CASE
         WHEN v_AdditionalInfo IS NULL
             THEN 'All user tables have primary keys.'

@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Configuration: statement_timeout is not configured. This allows queries to
+   What This Means: statement_timeout is not configured. This allows queries to
    run indefinitely unless they are cancelled manually or terminated by another
    mechanism.
 
@@ -9,11 +10,14 @@
    periods. A statement timeout provides a safety mechanism that helps prevent
    individual queries from impacting overall database availability.
 
-   REMEDIATION:
+   Recommendations:
    Configure statement_timeout to a value appropriate for the workload.
    Consider applying different timeout values at the role, database, or
    application level rather than a single global setting. Validate application
    behavior before enabling timeouts in production.
+
+   Scope : Cluster-level
+   Category : Performance
 
    REFERENCES:
    https://www.postgresql.org/docs/current/runtime-config-client.html

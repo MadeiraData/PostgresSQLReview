@@ -1,18 +1,22 @@
+
 /*
     DESCRIPTION:
-        Concurrency: Deadlocks were detected in one or more databases.
+        What This Means: Deadlocks were detected in one or more databases.
 
         A deadlock occurs when two or more sessions wait on each other in a cycle,
         and PostgreSQL resolves it by canceling one of the transactions. Deadlocks
         can indicate problematic transaction ordering, long-held locks, missing
         indexes, or application concurrency issues.
 
-    Remediation:
+    Recommendations:
         Review PostgreSQL logs around the deadlock times for the full deadlock
         details and involved SQL statements.
         Investigate application transaction order, lock acquisition order, and
         queries that hold locks for a long time.
         Consider adding indexes or reducing transaction scope where appropriate.
+
+    Scope : Database-level
+    Category : Performance
 
     More info:
         https://www.postgresql.org/docs/current/explicit-locking.html

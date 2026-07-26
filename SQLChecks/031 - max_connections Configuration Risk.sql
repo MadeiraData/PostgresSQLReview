@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Configuration: max_connections is configured with a potentially risky value.
+   What This Means: max_connections is configured with a potentially risky value.
    A high max_connections setting can increase memory pressure because each
    backend process consumes memory, and query operations may allocate additional
    memory such as work_mem.
@@ -9,11 +10,14 @@
    too high can reduce stability, increase context switching, and amplify memory
    usage during concurrent workloads.
 
-   REMEDIATION:
+   Recommendations:
    Review max_connections together with active connection usage, application
    concurrency, available RAM, work_mem, maintenance_work_mem, and connection
    pooling strategy. Consider using PgBouncer or another connection pooler
    instead of allowing excessive direct database connections.
+
+   Scope : Cluster-level
+   Category : Performance
 
    REFERENCES:
    https://www.postgresql.org/docs/current/runtime-config-connection.html

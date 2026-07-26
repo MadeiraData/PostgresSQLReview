@@ -1,12 +1,14 @@
-
 /*
     DESCRIPTION:
-        Concurrency: sessions are idle while holding an open transaction.
+        What This Means: sessions are idle while holding an open transaction.
         This can block vacuum cleanup, hold locks, and increase bloat risk.
 
-    Remediation:
+    Recommendations:
         Review the application/session behavior and close transactions promptly.
         Consider idle_in_transaction_session_timeout after validating application impact.
+
+    Scope : Database-level
+    Category : Performance
 
     More info:
         https://www.postgresql.org/docs/current/monitoring-stats.html

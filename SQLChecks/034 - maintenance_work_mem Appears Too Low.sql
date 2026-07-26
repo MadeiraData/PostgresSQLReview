@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Configuration: maintenance_work_mem appears to be too low. This can make
+   What This Means: maintenance_work_mem appears to be too low. This can make
    maintenance operations such as VACUUM, CREATE INDEX, ALTER TABLE ADD FOREIGN
    KEY, and other index-related operations slower than necessary.
 
@@ -8,11 +9,14 @@
    operations. If it is too small, PostgreSQL may need more passes or more
    temporary disk work during maintenance tasks, increasing runtime and I/O.
 
-   REMEDIATION:
+   Recommendations:
    Review maintenance_work_mem together with server RAM, maintenance workload,
    autovacuum settings, and concurrent maintenance operations. Consider
    increasing it for production systems, especially before large index builds or
    maintenance windows.
+
+   Scope : Cluster-level
+   Category : Performance
 
    REFERENCES:
    https://www.postgresql.org/docs/current/runtime-config-resource.html

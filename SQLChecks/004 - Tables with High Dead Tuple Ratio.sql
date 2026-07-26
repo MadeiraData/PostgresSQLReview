@@ -1,12 +1,14 @@
-
 /*
     DESCRIPTION:
-        Maintenance: tables have a high dead tuple ratio.
+        What This Means: tables have a high dead tuple ratio.
         This may indicate autovacuum is not keeping up or long transactions exist.
 
-    Remediation:
+    Recommendations:
         Investigate autovacuum behavior, table churn, and long-running transactions.
         Do not use VACUUM FULL as the default remediation.
+
+     Scope : Database-level
+     Category : Maintenance
 
     More info:
         https://www.postgresql.org/docs/current/monitoring-stats.html

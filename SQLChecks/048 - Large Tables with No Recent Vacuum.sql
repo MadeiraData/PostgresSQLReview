@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Maintenance: large tables have not been vacuumed recently. This may indicate
+   What This Means: large tables have not been vacuumed recently. This may indicate
    that dead tuples are not being cleaned up regularly on important tables.
 
    WHY THIS MATTERS:
@@ -8,11 +9,14 @@
    transaction ID wraparound risk. If large tables are not vacuumed regularly,
    performance and storage usage may degrade over time.
 
-   REMEDIATION:
+   Recommendations:
    Review large tables with no recent vacuum activity. Confirm that autovacuum
    is enabled and keeping up with table churn. Consider running VACUUM manually
    for affected tables and tuning table-level autovacuum thresholds for large
    or frequently updated tables.
+
+   Scope : Database-level
+   Category : Performance
 
    REFERENCES:
    https://www.postgresql.org/docs/current/sql-vacuum.html

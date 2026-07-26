@@ -1,12 +1,14 @@
-
 /*
     DESCRIPTION:
         Indexing: large indexes have zero recorded scans.
         This may indicate unused indexes, but counters must be validated before action.
 
-    Remediation:
+    Recommendations:
         Validate over a full business cycle before dropping indexes.
         Check constraints, rare reports, maintenance jobs, and statistics reset time.
+
+    Scope : Database-level
+    Category : Performance
 
     More info:
         https://www.postgresql.org/docs/current/monitoring-stats.html

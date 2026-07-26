@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Observability: log_autovacuum_min_duration is disabled. PostgreSQL is not
+   What This Means: log_autovacuum_min_duration is disabled. PostgreSQL is not
    configured to log autovacuum activity.
 
    WHY THIS MATTERS:
@@ -8,11 +9,14 @@
    prevention activity, and maintenance pressure. Without it, it is harder to
    troubleshoot table bloat, stale statistics, and autovacuum performance issues.
 
-   REMEDIATION:
+   Recommendations:
    Configure log_autovacuum_min_duration to an appropriate threshold. A common
    starting value is several seconds, such as 5000 ms or 10000 ms, to capture
    expensive autovacuum activity without excessive logging. Use 0 temporarily
    when deeper autovacuum diagnostics are required.
+
+   Scope : Cluster-level
+   Category : Monitoring
 
    REFERENCES:
    https://www.postgresql.org/docs/current/runtime-config-logging.html

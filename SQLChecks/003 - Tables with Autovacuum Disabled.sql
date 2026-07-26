@@ -1,12 +1,14 @@
-
 /*
     DESCRIPTION:
-        Maintenance: one or more user tables have autovacuum disabled.
+        What This Means: one or more user tables have autovacuum disabled.
         This can cause dead tuple accumulation, bloat, and stale statistics.
 
-    Remediation:
+    Recommendations:
         Review tables with autovacuum_enabled=false and enable autovacuum where possible.
         Keep autovacuum disabled only when a reliable manual process exists.
+
+    Scope : database-level
+    Category : Maintenance
 
     More info:
         https://www.postgresql.org/docs/current/runtime-config-autovacuum.html

@@ -1,6 +1,6 @@
 /*
     DESCRIPTION:
-        Performance: High cache miss ratio detected in one or more databases.
+        What This Means: High cache miss ratio detected in one or more databases.
 
         PostgreSQL reports block reads from disk and block hits from shared buffers
         in pg_stat_database. A high cache miss ratio means a larger percentage of
@@ -8,12 +8,15 @@
         pressure, inefficient queries, missing indexes, large scans, or a workload
         that does not fit well in shared buffers and OS cache.
 
-    Remediation:
+    Recommendations:
         Review query patterns, indexes, table scans, and memory pressure.
         Investigate databases with high disk reads using pg_stat_statements if
         available.
         Consider tuning shared_buffers carefully, improving indexes, reducing
         unnecessary full scans, and validating whether the working set fits in memory.
+
+        Scope : Cluster-level
+        Category : Performance
 
     More info:
         https://www.postgresql.org/docs/current/monitoring-stats.html

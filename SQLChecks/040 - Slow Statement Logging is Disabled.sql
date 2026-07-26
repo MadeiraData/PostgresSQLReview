@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Observability: slow statement logging is disabled. PostgreSQL is not
+   What This Means: slow statement logging is disabled. PostgreSQL is not
    configured to log long-running statements.
 
    WHY THIS MATTERS:
@@ -8,10 +9,13 @@
    bottlenecks, and workload changes. Without it, performance troubleshooting
    often requires reactive investigation after issues occur.
 
-   REMEDIATION:
+   Recommendations:
    Configure log_min_duration_statement to an appropriate threshold for the
    workload. Common starting values range from 500 ms to several seconds,
    depending on application requirements and logging volume considerations.
+   
+   Scope : Cluster-level
+   Category : Performance
 
    REFERENCES:
    https://www.postgresql.org/docs/current/runtime-config-logging.html
@@ -51,7 +55,7 @@ SELECT
     'Cluster-level',
     CASE WHEN v_AdditionalInfo IS NULL THEN false ELSE true END,
     2,
-    CASE WHEN v_AdditionalInfo IS NULL THEN 0 ELSE 2 END,
+    CASE WHEN v_AdditionalInfo IS NULL THEN 0 ELSE 1 END,
     CASE WHEN v_AdditionalInfo IS NULL THEN 0 ELSE 1 END,
     CASE WHEN v_AdditionalInfo IS NULL THEN 0 ELSE 1 END,
     CASE

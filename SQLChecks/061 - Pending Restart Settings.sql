@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Configuration: pending restart settings were detected. One or more
+   What This Means: pending restart settings were detected. One or more
    PostgreSQL configuration parameters have been changed but require a server
    restart before the new values take effect.
 
@@ -9,10 +10,13 @@
    PostgreSQL is still running with the previous value. This can affect memory,
    WAL, replication, logging, and other important server behavior.
 
-   REMEDIATION:
+   Recommendations:
    Review all settings where pending_restart is true. Confirm whether the
    pending values are intentional, schedule a controlled restart if needed, and
    validate the active configuration after restart.
+
+   Scope : Cluster-level
+   Category : Configurations
 
    REFERENCES:
    https://www.postgresql.org/docs/current/view-pg-settings.html

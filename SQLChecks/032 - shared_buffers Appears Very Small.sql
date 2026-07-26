@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Configuration: shared_buffers appears to be very small. This may indicate
+   What This Means: shared_buffers appears to be very small. This may indicate
    that PostgreSQL has not been tuned for the server workload or available
    memory.
 
@@ -8,11 +9,14 @@
    index pages. If it is too small, PostgreSQL may rely more heavily on the
    operating system cache and perform more physical I/O than necessary.
 
-   REMEDIATION:
+   Recommendations:
    Review shared_buffers together with total server RAM, workload type,
    effective_cache_size, checkpoint behavior, and operating system memory usage.
    For dedicated PostgreSQL servers, shared_buffers is commonly sized as a
    meaningful portion of RAM, but should be tested before changing in production.
+
+   Scope : Cluster-level
+   Category : Performance
 
    REFERENCES:
    https://www.postgresql.org/docs/current/runtime-config-resource.html

@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Performance: foreign keys exist without supporting indexes on the referencing
+   What This Means: foreign keys exist without supporting indexes on the referencing
    columns. This can slow down DELETE and UPDATE operations on the parent table
    because PostgreSQL must check referencing rows in the child table.
 
@@ -8,9 +9,12 @@
    Missing indexes can cause long-running statements, excessive locking, and
    poor performance during parent-table updates or deletes.
 
-   REMEDIATION:
+   Recommendations:
    Create indexes on foreign key referencing columns where appropriate,
    especially for active OLTP tables and large child tables.
+
+   Scope : Database-level
+   Category : Performance
 
    REFERENCES:
    https://www.postgresql.org/docs/current/ddl-constraints.html

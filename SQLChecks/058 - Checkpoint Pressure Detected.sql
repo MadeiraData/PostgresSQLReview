@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   WAL and checkpoints: checkpoint pressure was detected. PostgreSQL statistics
+   What This Means: checkpoint pressure was detected. PostgreSQL statistics
    show that checkpoints are occurring because WAL volume reaches max_wal_size,
    not only because checkpoint_timeout is reached.
 
@@ -9,11 +10,14 @@
    indicates that max_wal_size is too small for the WAL generation rate, or that
    checkpoint tuning and storage performance should be reviewed.
 
-   REMEDIATION:
+   Recommendations:
    Review pg_stat_bgwriter checkpoint activity together with max_wal_size,
    checkpoint_timeout, checkpoint_completion_target, log_checkpoints, WAL
    generation rate, and storage latency. Consider increasing max_wal_size if
    checkpoints are frequently requested before checkpoint_timeout is reached.
+
+   Scope : Cluster-level
+   Category : Backup
 
    REFERENCES:
    https://www.postgresql.org/docs/current/monitoring-stats.html

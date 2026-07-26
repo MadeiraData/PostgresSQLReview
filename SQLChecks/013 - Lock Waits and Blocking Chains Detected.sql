@@ -1,7 +1,35 @@
-/* ============================================================
-   CHECK: Lock Waits and Blocking Chains Detected
-   ============================================================ */
+/*
+    DESCRIPTION:
 
+    What This Means: One or more sessions are currently waiting to acquire locks
+        because other sessions (blockers) are holding conflicting locks. When a
+        blocker holds a lock for a long time, waiters queue up behind it, and a
+        single slow query, an idle-in-transaction session, or a DDL statement
+        (e.g. ALTER TABLE requiring AccessExclusiveLock) can cascade into a chain
+        that stalls many otherwise-fast queries and causes application timeouts.
+
+    Recommendations:
+        Identify the root blocker at the head of the chain (the session others are
+        ultimately waiting on) and decide on corrective action based on the
+        application: cancel the offending statement with pg_cancel_backend(pid) or,
+        if necessary, terminate it with pg_terminate_backend(pid). Look for
+        idle-in-transaction sessions and long-running transactions that hold locks
+        longer than needed. To prevent recurrence, set a session-level lock_timeout
+        so statements give up rather than block others indefinitely, keep
+        transactions short, avoid long-lived DDL during peak hours, and add or fix
+        indexes that reduce lock duration. Enabling log_lock_waits (with a suitable
+        deadlock_timeout) records slow lock acquisition in the server log for later
+        analysis.
+
+    Scope : database-level
+    Category : Concurrency
+
+    More info:
+        https://www.postgresql.org/docs/current/view-pg-locks.html
+        https://www.postgresql.org/docs/current/monitoring-stats.html#MONITORING-PG-STAT-ACTIVITY-VIEW
+        https://www.postgresql.org/docs/current/runtime-config-client.html#GUC-LOCK-TIMEOUT
+        https://wiki.postgresql.org/wiki/Lock_Monitoring
+*/
 
 v_AdditionalInfo :=
 (

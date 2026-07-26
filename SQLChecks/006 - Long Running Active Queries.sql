@@ -1,12 +1,14 @@
-
 /*
     DESCRIPTION:
-        Concurrency: active queries are running longer than the configured threshold.
+        What This Means: active queries are running longer than the configured threshold.
         Long-running queries may consume resources and delay other workload.
 
-    Remediation:
+    Recommendations:
         Review query purpose, execution plan, wait events, and application behavior.
         Do not terminate sessions automatically without business validation.
+
+    Scope : Database-level
+    Category : Performance
 
     More info:
         https://www.postgresql.org/docs/current/monitoring-stats.html

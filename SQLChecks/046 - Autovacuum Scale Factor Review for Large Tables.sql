@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Maintenance: autovacuum scale factor settings may be too high for large
+   What This Means: autovacuum scale factor settings may be too high for large
    tables. Large tables can require a very large number of row changes before
    autovacuum is triggered when scale-factor-based thresholds are used.
 
@@ -10,10 +11,13 @@
    delay statistics refreshes, and contribute to poor query plans or wraparound
    pressure.
 
-   REMEDIATION:
+   Recommendations:
    Review large tables and consider table-level autovacuum settings using lower
    scale factors and/or fixed thresholds. Prioritize frequently updated large
    tables with high dead tuple counts or stale statistics.
+
+   Scope : Cluster-level
+   Category : Maintenance
 
    REFERENCES:
    https://www.postgresql.org/docs/current/runtime-config-autovacuum.html

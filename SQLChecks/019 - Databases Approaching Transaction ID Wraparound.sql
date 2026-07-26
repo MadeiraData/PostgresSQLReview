@@ -1,6 +1,7 @@
+
 /*
     DESCRIPTION:
-        Maintenance: One or more databases have a high transaction ID age
+        What This Means: One or more databases have a high transaction ID age
         and may be approaching transaction ID wraparound.
 
         PostgreSQL uses transaction IDs (XIDs) that are limited in size.
@@ -8,11 +9,14 @@
         old XIDs can eventually approach wraparound, which may force
         emergency maintenance and can ultimately prevent writes.
 
-    Remediation:
+    Recommendations:
         Identify tables with high relfrozenxid age in the affected databases.
         Ensure autovacuum is functioning correctly and not being blocked by
         long-running transactions.
         Consider running VACUUM (FREEZE) on affected tables during a maintenance window.
+
+    Scope : Database-level
+    Category : Maintenance
 
     More info:
         https://www.postgresql.org/docs/current/routine-vacuuming.html

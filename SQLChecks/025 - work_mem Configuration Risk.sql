@@ -1,6 +1,7 @@
+
 /*
     DESCRIPTION:
-        Configuration: work_mem configuration may create memory pressure risk.
+        What This Means: work_mem configuration may create memory pressure risk.
 
         work_mem controls the memory available to each sort, hash join, materialize,
         and similar operation before PostgreSQL writes temporary files to disk.
@@ -11,13 +12,16 @@
         the risk of memory pressure, swapping, out-of-memory events, or degraded
         database performance.
 
-    Remediation:
+    Recommendations:
         Review work_mem together with max_connections, active workload concurrency,
         query patterns, and temporary file usage.
         Avoid setting work_mem too high globally.
         Prefer targeted tuning per role, per database, or per session for known
         reporting or maintenance workloads.
         Consider connection pooling to reduce concurrent memory risk.
+
+    Scope : Cluster-level
+    Category : Performance
 
     More info:
         https://www.postgresql.org/docs/current/runtime-config-resource.html

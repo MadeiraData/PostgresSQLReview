@@ -1,12 +1,14 @@
-
 /*
     DESCRIPTION:
-        Maintenance: autovacuum is disabled globally.
+        What This Means: autovacuum is disabled globally.
         This can cause bloat, stale statistics, and wraparound risk.
 
-    Remediation:
+    Recommendations:
         Enable autovacuum unless a documented manual maintenance process exists.
         Review autovacuum settings before changing cluster-wide configuration.
+
+    Scope : cluster-level
+    Category : Maintenance
 
     More info:
         https://www.postgresql.org/docs/current/runtime-config-autovacuum.html

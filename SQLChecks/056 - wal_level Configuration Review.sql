@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Replication and recovery: wal_level configuration should be reviewed.
+   What This Means: wal_level configuration should be reviewed.
    wal_level controls how much information PostgreSQL writes to WAL for crash
    recovery, replication, logical decoding, and point-in-time recovery support.
 
@@ -10,11 +11,14 @@
    increase WAL volume, so the setting should match the actual business and
    platform requirements.
 
-   REMEDIATION:
+   Recommendations:
    Review wal_level together with replication usage, logical decoding or CDC
    requirements, backup tooling, archive_mode, max_wal_senders, and replication
    slots. Use replica for physical replication and PITR requirements, and use
    logical only when logical replication or decoding is required.
+
+   Scope : Cluster-level
+   Category : Backup
 
    REFERENCES:
    https://www.postgresql.org/docs/current/runtime-config-wal.html

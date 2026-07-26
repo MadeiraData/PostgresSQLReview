@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   Replication: synchronous replication configuration should be reviewed.
+   What This Means: synchronous replication configuration should be reviewed.
    synchronous_commit or synchronous_standby_names may indicate that synchronous
    replication is disabled, partially configured, or configured in a way that
    may affect durability, latency, or failover expectations.
@@ -11,11 +12,14 @@
    If synchronous replication is expected but not configured correctly, recovery
    point objectives may not be met.
 
-   REMEDIATION:
+   Recommendations:
    Review synchronous_commit, synchronous_standby_names, connected standby
    servers, sync_state in pg_stat_replication, and business RPO/RTO
    requirements. Configure synchronous replication only where required, and
    validate failover behavior, quorum settings, and application latency impact.
+
+   Scope : Cluster-level
+   Category : Replication
 
    REFERENCES:
    https://www.postgresql.org/docs/current/runtime-config-replication.html

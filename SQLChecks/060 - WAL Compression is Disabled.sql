@@ -1,5 +1,6 @@
+
 /* DESCRIPTION:
-   WAL configuration: WAL compression is disabled. PostgreSQL is not configured
+   What This Means: WAL compression is disabled. PostgreSQL is not configured
    to compress full-page images written to WAL.
 
    WHY THIS MATTERS:
@@ -8,11 +9,14 @@
    workloads can produce more WAL traffic, increase disk usage, increase
    replication bandwidth, and increase WAL archiving volume.
 
-   REMEDIATION:
+   Recommendations:
    Review wal_compression together with WAL generation rate, CPU capacity,
    replication bandwidth, archive storage usage, and checkpoint behavior.
    Consider enabling WAL compression if WAL volume is high and the server has
    enough CPU capacity to absorb the compression overhead.
+
+   Scope : Cluster-level
+   Category : Performance
 
    REFERENCES:
    https://www.postgresql.org/docs/current/runtime-config-wal.html
