@@ -26,7 +26,9 @@
 
 v_AdditionalInfo := (
     SELECT CASE
-        WHEN pg_size_bytes(current_setting('autovacuum_naptime')) <= 300000 -- 5 minutes
+        WHEN (SELECT setting::integer
+              FROM pg_settings
+              WHERE name = 'autovacuum_naptime') <= 300 -- 5 minutes (base unit is seconds)
             THEN NULL::jsonb
         ELSE jsonb_build_object(
             'AutovacuumNaptime',

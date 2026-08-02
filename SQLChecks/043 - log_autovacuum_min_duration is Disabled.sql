@@ -25,7 +25,9 @@
 
 v_AdditionalInfo := (
     SELECT CASE
-        WHEN current_setting('log_autovacuum_min_duration', true)::integer >= 0
+        WHEN (SELECT setting::integer
+              FROM pg_settings
+              WHERE name = 'log_autovacuum_min_duration') >= 0
             THEN NULL::jsonb
         ELSE jsonb_build_object(
             'LogAutovacuumMinDuration',
