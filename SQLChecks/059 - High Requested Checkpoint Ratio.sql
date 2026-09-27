@@ -26,68 +26,137 @@
    https://www.postgresql.org/docs/current/runtime-config-wal.html
 */
 
-v_AdditionalInfo := (
-    WITH checkpoint_stats AS (
-        SELECT
-            checkpoints_timed,
-            checkpoints_req,
-            checkpoint_write_time,
-            checkpoint_sync_time,
-            buffers_checkpoint,
-            buffers_backend,
-            buffers_backend_fsync,
-            buffers_alloc,
-            stats_reset,
-            CASE
-                WHEN (checkpoints_timed + checkpoints_req) > 0
-                    THEN round(
-                        checkpoints_req::numeric
-                        / (checkpoints_timed + checkpoints_req)::numeric,
-                        4
-                    )
-                ELSE 0
-            END AS requested_checkpoint_ratio
-        FROM pg_stat_bgwriter
-    )
-    SELECT CASE
-        WHEN checkpoints_req < 10
-          OR requested_checkpoint_ratio < 0.50
-            THEN NULL::jsonb
-        ELSE jsonb_build_object(
-            'CheckpointsTimed',
-                checkpoints_timed,
-            'CheckpointsRequested',
-                checkpoints_req,
-            'RequestedCheckpointRatio',
-                requested_checkpoint_ratio,
-            'CheckpointWriteTimeMs',
-                checkpoint_write_time,
-            'CheckpointSyncTimeMs',
-                checkpoint_sync_time,
-            'BuffersCheckpoint',
-                buffers_checkpoint,
-            'BuffersBackend',
-                buffers_backend,
-            'BuffersBackendFsync',
-                buffers_backend_fsync,
-            'BuffersAlloc',
-                buffers_alloc,
-            'StatsReset',
-                stats_reset,
-            'MaxWalSize',
-                current_setting('max_wal_size', true),
-            'MinWalSize',
-                current_setting('min_wal_size', true),
-            'CheckpointTimeout',
-                current_setting('checkpoint_timeout', true),
-            'CheckpointCompletionTarget',
-                current_setting('checkpoint_completion_target', true),
-            'FindingReason',
-                'More than 50% of checkpoints are requested checkpoints, indicating that checkpoints are often triggered by WAL volume before checkpoint_timeout.'
-        )
-    END
-    FROM checkpoint_stats
-);
+DECLARE
+    v_ServerVersionNum integer := current_setting('server_version_num')::integer;
+    v_Query            text;
+BEGIN
+    IF v_ServerVersionNum >= 170000 THEN
+        -- PostgreSQL 17+ moved checkpoint counters out of pg_stat_bgwriter and
+        -- into the dedicated pg_stat_checkpointer view.
+        v_Query := $sql$
+            WITH checkpoint_stats AS (
+                SELECT
+                    cp.num_timed AS checkpoints_timed,
+                    cp.num_requested AS checkpoints_req,
+                    cp.write_time AS checkpoint_write_time,
+                    cp.sync_time AS checkpoint_sync_time,
+                    cp.buffers_written AS buffers_checkpoint,
+                    bg.buffers_alloc,
+                    cp.stats_reset,
+                    CASE
+                        WHEN (cp.num_timed + cp.num_requested) > 0
+                            THEN round(
+                                cp.num_requested::numeric
+                                / (cp.num_timed + cp.num_requested)::numeric,
+                                4
+                            )
+                        ELSE 0
+                    END AS requested_checkpoint_ratio
+                FROM pg_stat_checkpointer cp
+                CROSS JOIN pg_stat_bgwriter bg
+            )
+            SELECT CASE
+                WHEN checkpoints_req < 10
+                  OR requested_checkpoint_ratio < 0.50
+                    THEN NULL::jsonb
+                ELSE jsonb_build_object(
+                    'CheckpointsTimed',
+                        checkpoints_timed,
+                    'CheckpointsRequested',
+                        checkpoints_req,
+                    'RequestedCheckpointRatio',
+                        requested_checkpoint_ratio,
+                    'CheckpointWriteTimeMs',
+                        checkpoint_write_time,
+                    'CheckpointSyncTimeMs',
+                        checkpoint_sync_time,
+                    'BuffersCheckpoint',
+                        buffers_checkpoint,
+                    'BuffersAlloc',
+                        buffers_alloc,
+                    'StatsReset',
+                        stats_reset,
+                    'MaxWalSize',
+                        current_setting('max_wal_size', true),
+                    'MinWalSize',
+                        current_setting('min_wal_size', true),
+                    'CheckpointTimeout',
+                        current_setting('checkpoint_timeout', true),
+                    'CheckpointCompletionTarget',
+                        current_setting('checkpoint_completion_target', true),
+                    'FindingReason',
+                        'More than 50% of checkpoints are requested checkpoints, indicating that checkpoints are often triggered by WAL volume before checkpoint_timeout.'
+                )
+            END
+            FROM checkpoint_stats
+        $sql$;
+    ELSE
+        v_Query := $sql$
+            WITH checkpoint_stats AS (
+                SELECT
+                    checkpoints_timed,
+                    checkpoints_req,
+                    checkpoint_write_time,
+                    checkpoint_sync_time,
+                    buffers_checkpoint,
+                    buffers_backend,
+                    buffers_backend_fsync,
+                    buffers_alloc,
+                    stats_reset,
+                    CASE
+                        WHEN (checkpoints_timed + checkpoints_req) > 0
+                            THEN round(
+                                checkpoints_req::numeric
+                                / (checkpoints_timed + checkpoints_req)::numeric,
+                                4
+                            )
+                        ELSE 0
+                    END AS requested_checkpoint_ratio
+                FROM pg_stat_bgwriter
+            )
+            SELECT CASE
+                WHEN checkpoints_req < 10
+                  OR requested_checkpoint_ratio < 0.50
+                    THEN NULL::jsonb
+                ELSE jsonb_build_object(
+                    'CheckpointsTimed',
+                        checkpoints_timed,
+                    'CheckpointsRequested',
+                        checkpoints_req,
+                    'RequestedCheckpointRatio',
+                        requested_checkpoint_ratio,
+                    'CheckpointWriteTimeMs',
+                        checkpoint_write_time,
+                    'CheckpointSyncTimeMs',
+                        checkpoint_sync_time,
+                    'BuffersCheckpoint',
+                        buffers_checkpoint,
+                    'BuffersBackend',
+                        buffers_backend,
+                    'BuffersBackendFsync',
+                        buffers_backend_fsync,
+                    'BuffersAlloc',
+                        buffers_alloc,
+                    'StatsReset',
+                        stats_reset,
+                    'MaxWalSize',
+                        current_setting('max_wal_size', true),
+                    'MinWalSize',
+                        current_setting('min_wal_size', true),
+                    'CheckpointTimeout',
+                        current_setting('checkpoint_timeout', true),
+                    'CheckpointCompletionTarget',
+                        current_setting('checkpoint_completion_target', true),
+                    'FindingReason',
+                        'More than 50% of checkpoints are requested checkpoints, indicating that checkpoints are often triggered by WAL volume before checkpoint_timeout.'
+                )
+            END
+            FROM checkpoint_stats
+        $sql$;
+    END IF;
+
+    EXECUTE v_Query INTO v_AdditionalInfo;
+END;
 
 INSERT INTO pg_review_results (
     CheckId,
