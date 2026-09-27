@@ -1,0 +1,1864 @@
+{
+    "Summary": {
+        "TotalChecks": 85,
+        "CheckErrorsCount": 0,
+        "FailedChecksCount": 15,
+        "LowImpactFindings": 6,
+        "PassedChecksCount": 70,
+        "HighImpactFindings": 5,
+        "MediumImpactFindings": 4,
+        "HighRiskRecommendations": 1,
+        "HighEffortRecommendations": 0
+    },
+    "ScoreNote": "Score is calculated from checks that executed successfully.",
+    "ExecutedBy": "postgres",
+    "CheckErrors": [
+    ],
+    "ClusterScore": 87,
+    "HeaderErrors": [
+    ],
+    "AssessmentType": "PostgreSQL Review",
+    "ReviewWarnings": [
+        "PostgreSQL distribution/flavor detection is best-effort and may not be fully accurate in managed services.",
+        "Some checks are cluster-level, while table, index, schema, pg_stat_statements, and database statistics checks apply to the current database.",
+        "Session, lock, connection, and transaction findings are snapshot-based and should be correlated with monitoring data.",
+        "Some findings are based on cumulative PostgreSQL statistics since the last statistics reset.",
+        "Checks that fail to execute are reported in CheckErrors and are not included in the score calculation.",
+        "PostgreSQL does not expose full operating system and hardware inventory through standard SQL."
+    ],
+    "CurrentDatabase": "postgres",
+    "ReviewScriptName": "PostgreSQL_Review_Full_Check_Script.sql",
+    "ReviewGeneratedAt": "2026-09-27T10:53:57.210331+03:00",
+    "SystemIntroduction": {
+        "Databases": [
+            {
+                "ownername": "postgres",
+                "istemplate": false,
+                "databasename": "postgres",
+                "databasesize": "9398 kB",
+                "databasectype": "English_United States.1252",
+                "connectionlimit": -1,
+                "allowconnections": true,
+                "databaseencoding": "UTF8",
+                "databasecollation": "English_United States.1252",
+                "databasesizebytes": 9623231
+            },
+            {
+                "ownername": "postgres",
+                "istemplate": true,
+                "databasename": "template0",
+                "databasesize": null,
+                "databasectype": "English_United States.1252",
+                "connectionlimit": -1,
+                "allowconnections": false,
+                "databaseencoding": "UTF8",
+                "databasecollation": "English_United States.1252",
+                "databasesizebytes": null
+            },
+            {
+                "ownername": "postgres",
+                "istemplate": true,
+                "databasename": "template1",
+                "databasesize": "7929 kB",
+                "databasectype": "English_United States.1252",
+                "connectionlimit": -1,
+                "allowconnections": true,
+                "databaseencoding": "UTF8",
+                "databasecollation": "English_United States.1252",
+                "databasesizebytes": 8118799
+            }
+        ],
+        "Licensing": {
+            "licensingnote": "PostgreSQL Community does not use socket/core licensing. Managed services and commercial distributions may have provider-specific pricing or subscriptions.",
+            "licensingcategory": "PostgreSQL License",
+            "licensinginformation": "PostgreSQL is released under the PostgreSQL License, a liberal open-source license."
+        },
+        "Extensions": [
+            {
+                "schemaname": "pg_catalog",
+                "extensionname": "plpgsql",
+                "isrelocatable": false,
+                "extensionversion": "1.0"
+            }
+        ],
+        "Tablespaces": [
+            {
+                "ownername": "postgres",
+                "tablespacename": "pg_default",
+                "tablespaceoptions": null,
+                "tablespacelocation": ""
+            },
+            {
+                "ownername": "postgres",
+                "tablespacename": "pg_global",
+                "tablespaceoptions": null,
+                "tablespacelocation": ""
+            }
+        ],
+        "Capabilities": [
+            {
+                "isavailable": true,
+                "capabilityname": "Current database TEMP privilege"
+            },
+            {
+                "isavailable": true,
+                "capabilityname": "Current user has pg_monitor"
+            },
+            {
+                "isavailable": true,
+                "capabilityname": "Current user has pg_read_all_settings"
+            },
+            {
+                "isavailable": true,
+                "capabilityname": "Current user has pg_read_all_stats"
+            },
+            {
+                "isavailable": true,
+                "capabilityname": "pg_stat_checkpointer view available"
+            },
+            {
+                "isavailable": true,
+                "capabilityname": "pg_stat_io view available"
+            },
+            {
+                "isavailable": false,
+                "capabilityname": "pg_stat_statements extension installed in current database"
+            },
+            {
+                "isavailable": false,
+                "capabilityname": "pg_stat_statements view visible"
+            },
+            {
+                "isavailable": true,
+                "capabilityname": "pg_stat_wal view available"
+            }
+        ],
+        "HostVisibility": {
+            "clientport": 49677,
+            "numofnumas": null,
+            "serverport": 5432,
+            "numofsockets": null,
+            "corespersocket": null,
+            "hostnumofcores": null,
+            "clientipaddress": "::1/128",
+            "serveripaddress": "::1/128",
+            "physicalmemory_gb": null,
+            "virtualizationtype": "Not available from standard PostgreSQL SQL",
+            "operatingsystemname": "Not available from standard PostgreSQL SQL",
+            "operatingsystemrelease": "Not available from standard PostgreSQL SQL",
+            "hostresourcecollectionnote": "Collect OS and hardware details from operating system, cloud provider, VM platform, container platform, or monitoring tool.",
+            "operatingsystemarchitecture": "Not available from standard PostgreSQL SQL",
+            "postgresqlbuildandhoststring": "PostgreSQL 18.6 on x86_64-windows, compiled by msvc-19.44.35228, 64-bit"
+        },
+        "ServerIdentity": {
+            "hbafile": "C:/Program Files/PostgreSQL/18/data/pg_hba.conf",
+            "identfile": "C:/Program Files/PostgreSQL/18/data/pg_ident.conf",
+            "configfile": "C:/Program Files/PostgreSQL/18/data/postgresql.conf",
+            "serverport": 5432,
+            "isinrecovery": false,
+            "datadirectory": "C:/Program Files/PostgreSQL/18/data",
+            "serveripaddress": "::1/128",
+            "postgresqluptime": "13 days 00:37:27.696705",
+            "postgresqlversion": "18.6",
+            "currentdatabasename": "postgres",
+            "postgresqlstarttime": "2026-09-14T10:16:29.513626+03:00",
+            "transactionreadonly": "off",
+            "postgresqlversionnum": "180006",
+            "postgresqlclustername": "Not provided",
+            "postgresqlfullversionstring": "PostgreSQL 18.6 on x86_64-windows, compiled by msvc-19.44.35228, 64-bit"
+        },
+        "ActivitySummary": {
+            "distinctusers": 1,
+            "idleconnections": 1,
+            "oldestquerystart": "2026-09-27T10:53:54.25091+03:00",
+            "totalconnections": 10,
+            "activeconnections": 1,
+            "oldestbackendstart": "2026-09-14T10:16:29.602711+03:00",
+            "distinctapplications": 3,
+            "oldesttransactionstart": "2026-09-27T10:53:57.210331+03:00",
+            "sessionswaitingonlocks": 0,
+            "distinctclientaddresses": 1,
+            "idleintransactionconnections": 0
+        },
+        "ExecutionContext": {
+            "canlogin": true,
+            "currentuser": "postgres",
+            "issuperuser": true,
+            "sessionuser": "postgres",
+            "haspgmonitor": true,
+            "cancreaterole": true,
+            "cancreatedatabase": true,
+            "haspgreadallstats": true,
+            "currentdatabasename": "postgres",
+            "haspgstatscantables": true,
+            "haspgreadallsettings": true,
+            "hasreplicationprivilege": true,
+            "canbypassrowlevelsecurity": true
+        },
+        "ReplicationState": {
+            "wallevel": "replica",
+            "archivemode": "off",
+            "walkeepsize": "0",
+            "isinrecovery": false,
+            "maxwalsenders": "10",
+            "maxreplicationslots": "10",
+            "replicationslotcount": 0,
+            "connectedstandbycount": 0,
+            "activereplicationslotcount": 0
+        },
+        "ImportantSettings": [
+            {
+                "unit": null,
+                "source": "default",
+                "context": "sighup",
+                "category": "Write-Ahead Log / Archiving",
+                "bootvalue": "",
+                "valuetype": "string",
+                "resetvalue": "",
+                "description": "Sets the shell command that will be called to archive a WAL file.",
+                "settingname": "archive_command",
+                "settingvalue": "(disabled)",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "sighup",
+                "category": "Write-Ahead Log / Archiving",
+                "bootvalue": "",
+                "valuetype": "string",
+                "resetvalue": "",
+                "description": "Sets the library that will be called to archive a WAL file.",
+                "settingname": "archive_library",
+                "settingvalue": "",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "postmaster",
+                "category": "Write-Ahead Log / Archiving",
+                "bootvalue": "off",
+                "valuetype": "enum",
+                "resetvalue": "off",
+                "description": "Allows archiving of WAL files using \"archive_command\".",
+                "settingname": "archive_mode",
+                "settingvalue": "off",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "sighup",
+                "category": "Vacuuming / Automatic Vacuuming",
+                "bootvalue": "on",
+                "valuetype": "bool",
+                "resetvalue": "on",
+                "description": "Starts the autovacuum subprocess.",
+                "settingname": "autovacuum",
+                "settingvalue": "on",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "sighup",
+                "category": "Vacuuming / Automatic Vacuuming",
+                "bootvalue": "0.1",
+                "valuetype": "real",
+                "resetvalue": "0.1",
+                "description": "Number of tuple inserts, updates, or deletes prior to analyze as a fraction of reltuples.",
+                "settingname": "autovacuum_analyze_scale_factor",
+                "settingvalue": "0.1",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "sighup",
+                "category": "Vacuuming / Automatic Vacuuming",
+                "bootvalue": "50",
+                "valuetype": "integer",
+                "resetvalue": "50",
+                "description": "Minimum number of tuple inserts, updates, or deletes prior to analyze.",
+                "settingname": "autovacuum_analyze_threshold",
+                "settingvalue": "50",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "postmaster",
+                "category": "Vacuuming / Automatic Vacuuming",
+                "bootvalue": "200000000",
+                "valuetype": "integer",
+                "resetvalue": "200000000",
+                "description": "Age at which to autovacuum a table to prevent transaction ID wraparound.",
+                "settingname": "autovacuum_freeze_max_age",
+                "settingvalue": "200000000",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "sighup",
+                "category": "Vacuuming / Automatic Vacuuming",
+                "bootvalue": "3",
+                "valuetype": "integer",
+                "resetvalue": "3",
+                "description": "Sets the maximum number of simultaneously running autovacuum worker processes.",
+                "settingname": "autovacuum_max_workers",
+                "settingvalue": "3",
+                "pendingrestart": false
+            },
+            {
+                "unit": "s",
+                "source": "default",
+                "context": "sighup",
+                "category": "Vacuuming / Automatic Vacuuming",
+                "bootvalue": "60",
+                "valuetype": "integer",
+                "resetvalue": "60",
+                "description": "Time to sleep between autovacuum runs.",
+                "settingname": "autovacuum_naptime",
+                "settingvalue": "60",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "sighup",
+                "category": "Vacuuming / Automatic Vacuuming",
+                "bootvalue": "0.2",
+                "valuetype": "real",
+                "resetvalue": "0.2",
+                "description": "Number of tuple updates or deletes prior to vacuum as a fraction of reltuples.",
+                "settingname": "autovacuum_vacuum_scale_factor",
+                "settingvalue": "0.2",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "sighup",
+                "category": "Vacuuming / Automatic Vacuuming",
+                "bootvalue": "50",
+                "valuetype": "integer",
+                "resetvalue": "50",
+                "description": "Minimum number of tuple updates or deletes prior to vacuum.",
+                "settingname": "autovacuum_vacuum_threshold",
+                "settingvalue": "50",
+                "pendingrestart": false
+            },
+            {
+                "unit": "kB",
+                "source": "default",
+                "context": "sighup",
+                "category": "Resource Usage / Memory",
+                "bootvalue": "-1",
+                "valuetype": "integer",
+                "resetvalue": "-1",
+                "description": "Sets the maximum memory to be used by each autovacuum worker process.",
+                "settingname": "autovacuum_work_mem",
+                "settingvalue": "-1",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "sighup",
+                "category": "Write-Ahead Log / Checkpoints",
+                "bootvalue": "0.9",
+                "valuetype": "real",
+                "resetvalue": "0.9",
+                "description": "Time spent flushing dirty buffers during checkpoint, as fraction of checkpoint interval.",
+                "settingname": "checkpoint_completion_target",
+                "settingvalue": "0.9",
+                "pendingrestart": false
+            },
+            {
+                "unit": "s",
+                "source": "default",
+                "context": "sighup",
+                "category": "Write-Ahead Log / Checkpoints",
+                "bootvalue": "300",
+                "valuetype": "integer",
+                "resetvalue": "300",
+                "description": "Sets the maximum time between automatic WAL checkpoints.",
+                "settingname": "checkpoint_timeout",
+                "settingvalue": "300",
+                "pendingrestart": false
+            },
+            {
+                "unit": "ms",
+                "source": "default",
+                "context": "superuser",
+                "category": "Lock Management",
+                "bootvalue": "1000",
+                "valuetype": "integer",
+                "resetvalue": "1000",
+                "description": "Sets the time to wait on a lock before checking for deadlock.",
+                "settingname": "deadlock_timeout",
+                "settingvalue": "1000",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "user",
+                "category": "Query Tuning / Other Planner Options",
+                "bootvalue": "100",
+                "valuetype": "integer",
+                "resetvalue": "100",
+                "description": "Sets the default statistics target.",
+                "settingname": "default_statistics_target",
+                "settingvalue": "100",
+                "pendingrestart": false
+            },
+            {
+                "unit": "8kB",
+                "source": "default",
+                "context": "user",
+                "category": "Query Tuning / Planner Cost Constants",
+                "bootvalue": "524288",
+                "valuetype": "integer",
+                "resetvalue": "524288",
+                "description": "Sets the planner's assumption about the total size of the data caches.",
+                "settingname": "effective_cache_size",
+                "settingvalue": "524288",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "user",
+                "category": "Resource Usage / I/O",
+                "bootvalue": "16",
+                "valuetype": "integer",
+                "resetvalue": "16",
+                "description": "Number of simultaneous requests that can be handled efficiently by the disk subsystem.",
+                "settingname": "effective_io_concurrency",
+                "settingvalue": "16",
+                "pendingrestart": false
+            },
+            {
+                "unit": "ms",
+                "source": "default",
+                "context": "user",
+                "category": "Client Connection Defaults / Statement Behavior",
+                "bootvalue": "0",
+                "valuetype": "integer",
+                "resetvalue": "0",
+                "description": "Sets the maximum allowed idle time between queries, when in a transaction.",
+                "settingname": "idle_in_transaction_session_timeout",
+                "settingvalue": "0",
+                "pendingrestart": false
+            },
+            {
+                "unit": "ms",
+                "source": "default",
+                "context": "user",
+                "category": "Client Connection Defaults / Statement Behavior",
+                "bootvalue": "0",
+                "valuetype": "integer",
+                "resetvalue": "0",
+                "description": "Sets the maximum allowed duration of any wait for a lock.",
+                "settingname": "lock_timeout",
+                "settingvalue": "0",
+                "pendingrestart": false
+            },
+            {
+                "unit": "ms",
+                "source": "default",
+                "context": "sighup",
+                "category": "Reporting and Logging / What to Log",
+                "bootvalue": "600000",
+                "valuetype": "integer",
+                "resetvalue": "600000",
+                "description": "Sets the minimum execution time above which autovacuum actions will be logged.",
+                "settingname": "log_autovacuum_min_duration",
+                "settingvalue": "600000",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "sighup",
+                "category": "Reporting and Logging / What to Log",
+                "bootvalue": "on",
+                "valuetype": "bool",
+                "resetvalue": "on",
+                "description": "Logs each checkpoint.",
+                "settingname": "log_checkpoints",
+                "settingvalue": "on",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "superuser",
+                "category": "Reporting and Logging / What to Log",
+                "bootvalue": "off",
+                "valuetype": "bool",
+                "resetvalue": "off",
+                "description": "Logs long lock waits.",
+                "settingname": "log_lock_waits",
+                "settingvalue": "off",
+                "pendingrestart": false
+            },
+            {
+                "unit": "ms",
+                "source": "default",
+                "context": "superuser",
+                "category": "Reporting and Logging / When to Log",
+                "bootvalue": "-1",
+                "valuetype": "integer",
+                "resetvalue": "-1",
+                "description": "Sets the minimum execution time above which all statements will be logged.",
+                "settingname": "log_min_duration_statement",
+                "settingvalue": "-1",
+                "pendingrestart": false
+            },
+            {
+                "unit": "kB",
+                "source": "default",
+                "context": "superuser",
+                "category": "Reporting and Logging / What to Log",
+                "bootvalue": "-1",
+                "valuetype": "integer",
+                "resetvalue": "-1",
+                "description": "Log the use of temporary files larger than this number of kilobytes.",
+                "settingname": "log_temp_files",
+                "settingvalue": "-1",
+                "pendingrestart": false
+            },
+            {
+                "unit": "kB",
+                "source": "default",
+                "context": "user",
+                "category": "Resource Usage / Memory",
+                "bootvalue": "65536",
+                "valuetype": "integer",
+                "resetvalue": "65536",
+                "description": "Sets the maximum memory to be used for maintenance operations.",
+                "settingname": "maintenance_work_mem",
+                "settingvalue": "65536",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "configuration file",
+                "context": "postmaster",
+                "category": "Connections and Authentication / Connection Settings",
+                "bootvalue": "100",
+                "valuetype": "integer",
+                "resetvalue": "100",
+                "description": "Sets the maximum number of concurrent connections.",
+                "settingname": "max_connections",
+                "settingvalue": "100",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "user",
+                "category": "Resource Usage / Worker Processes",
+                "bootvalue": "8",
+                "valuetype": "integer",
+                "resetvalue": "8",
+                "description": "Sets the maximum number of parallel workers that can be active at one time.",
+                "settingname": "max_parallel_workers",
+                "settingvalue": "8",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "user",
+                "category": "Resource Usage / Worker Processes",
+                "bootvalue": "2",
+                "valuetype": "integer",
+                "resetvalue": "2",
+                "description": "Sets the maximum number of parallel processes per executor node.",
+                "settingname": "max_parallel_workers_per_gather",
+                "settingvalue": "2",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "postmaster",
+                "category": "Replication / Sending Servers",
+                "bootvalue": "10",
+                "valuetype": "integer",
+                "resetvalue": "10",
+                "description": "Sets the maximum number of simultaneously defined replication slots.",
+                "settingname": "max_replication_slots",
+                "settingvalue": "10",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "postmaster",
+                "category": "Replication / Sending Servers",
+                "bootvalue": "10",
+                "valuetype": "integer",
+                "resetvalue": "10",
+                "description": "Sets the maximum number of simultaneously running WAL sender processes.",
+                "settingname": "max_wal_senders",
+                "settingvalue": "10",
+                "pendingrestart": false
+            },
+            {
+                "unit": "MB",
+                "source": "configuration file",
+                "context": "sighup",
+                "category": "Write-Ahead Log / Checkpoints",
+                "bootvalue": "1024",
+                "valuetype": "integer",
+                "resetvalue": "1024",
+                "description": "Sets the WAL size that triggers a checkpoint.",
+                "settingname": "max_wal_size",
+                "settingvalue": "1024",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "postmaster",
+                "category": "Resource Usage / Worker Processes",
+                "bootvalue": "8",
+                "valuetype": "integer",
+                "resetvalue": "8",
+                "description": "Maximum number of concurrent worker processes.",
+                "settingname": "max_worker_processes",
+                "settingvalue": "8",
+                "pendingrestart": false
+            },
+            {
+                "unit": "MB",
+                "source": "configuration file",
+                "context": "sighup",
+                "category": "Write-Ahead Log / Checkpoints",
+                "bootvalue": "80",
+                "valuetype": "integer",
+                "resetvalue": "80",
+                "description": "Sets the minimum size to shrink the WAL to.",
+                "settingname": "min_wal_size",
+                "settingvalue": "80",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "user",
+                "category": "Query Tuning / Planner Cost Constants",
+                "bootvalue": "4",
+                "valuetype": "real",
+                "resetvalue": "4",
+                "description": "Sets the planner's estimate of the cost of a nonsequentially fetched disk page.",
+                "settingname": "random_page_cost",
+                "settingvalue": "4",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "postmaster",
+                "category": "Connections and Authentication / Connection Settings",
+                "bootvalue": "0",
+                "valuetype": "integer",
+                "resetvalue": "0",
+                "description": "Sets the number of connection slots reserved for roles with privileges of pg_use_reserved_connections.",
+                "settingname": "reserved_connections",
+                "settingvalue": "0",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "user",
+                "category": "Query Tuning / Planner Cost Constants",
+                "bootvalue": "1",
+                "valuetype": "real",
+                "resetvalue": "1",
+                "description": "Sets the planner's estimate of the cost of a sequentially fetched disk page.",
+                "settingname": "seq_page_cost",
+                "settingvalue": "1",
+                "pendingrestart": false
+            },
+            {
+                "unit": "8kB",
+                "source": "configuration file",
+                "context": "postmaster",
+                "category": "Resource Usage / Memory",
+                "bootvalue": "16384",
+                "valuetype": "integer",
+                "resetvalue": "16384",
+                "description": "Sets the number of shared memory buffers used by the server.",
+                "settingname": "shared_buffers",
+                "settingvalue": "16384",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "postmaster",
+                "category": "Client Connection Defaults / Shared Library Preloading",
+                "bootvalue": "",
+                "valuetype": "string",
+                "resetvalue": "",
+                "description": "Lists shared libraries to preload into server.",
+                "settingname": "shared_preload_libraries",
+                "settingvalue": "",
+                "pendingrestart": false
+            },
+            {
+                "unit": "ms",
+                "source": "default",
+                "context": "user",
+                "category": "Client Connection Defaults / Statement Behavior",
+                "bootvalue": "0",
+                "valuetype": "integer",
+                "resetvalue": "0",
+                "description": "Sets the maximum allowed duration of any statement.",
+                "settingname": "statement_timeout",
+                "settingvalue": "0",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "postmaster",
+                "category": "Connections and Authentication / Connection Settings",
+                "bootvalue": "3",
+                "valuetype": "integer",
+                "resetvalue": "3",
+                "description": "Sets the number of connection slots reserved for superusers.",
+                "settingname": "superuser_reserved_connections",
+                "settingvalue": "3",
+                "pendingrestart": false
+            },
+            {
+                "unit": "kB",
+                "source": "default",
+                "context": "superuser",
+                "category": "Resource Usage / Disk",
+                "bootvalue": "-1",
+                "valuetype": "integer",
+                "resetvalue": "-1",
+                "description": "Limits the total size of all temporary files used by each process.",
+                "settingname": "temp_file_limit",
+                "settingvalue": "-1",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "superuser",
+                "category": "Statistics / Cumulative Query and Index Statistics",
+                "bootvalue": "on",
+                "valuetype": "bool",
+                "resetvalue": "on",
+                "description": "Collects information about executing commands.",
+                "settingname": "track_activities",
+                "settingvalue": "on",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "superuser",
+                "category": "Statistics / Cumulative Query and Index Statistics",
+                "bootvalue": "on",
+                "valuetype": "bool",
+                "resetvalue": "on",
+                "description": "Collects statistics on database activity.",
+                "settingname": "track_counts",
+                "settingvalue": "on",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "superuser",
+                "category": "Statistics / Cumulative Query and Index Statistics",
+                "bootvalue": "off",
+                "valuetype": "bool",
+                "resetvalue": "off",
+                "description": "Collects timing statistics for database I/O activity.",
+                "settingname": "track_io_timing",
+                "settingvalue": "off",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "superuser",
+                "category": "Statistics / Cumulative Query and Index Statistics",
+                "bootvalue": "off",
+                "valuetype": "bool",
+                "resetvalue": "off",
+                "description": "Collects timing statistics for WAL I/O activity.",
+                "settingname": "track_wal_io_timing",
+                "settingvalue": "off",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "superuser",
+                "category": "Write-Ahead Log / Settings",
+                "bootvalue": "off",
+                "valuetype": "enum",
+                "resetvalue": "off",
+                "description": "Compresses full-page writes written in WAL file with specified method.",
+                "settingname": "wal_compression",
+                "settingvalue": "off",
+                "pendingrestart": false
+            },
+            {
+                "unit": "MB",
+                "source": "default",
+                "context": "sighup",
+                "category": "Replication / Sending Servers",
+                "bootvalue": "0",
+                "valuetype": "integer",
+                "resetvalue": "0",
+                "description": "Sets the size of WAL files held for standby servers.",
+                "settingname": "wal_keep_size",
+                "settingvalue": "0",
+                "pendingrestart": false
+            },
+            {
+                "unit": null,
+                "source": "default",
+                "context": "postmaster",
+                "category": "Write-Ahead Log / Settings",
+                "bootvalue": "replica",
+                "valuetype": "enum",
+                "resetvalue": "replica",
+                "description": "Sets the level of information written to the WAL.",
+                "settingname": "wal_level",
+                "settingvalue": "replica",
+                "pendingrestart": false
+            },
+            {
+                "unit": "kB",
+                "source": "default",
+                "context": "user",
+                "category": "Resource Usage / Memory",
+                "bootvalue": "4096",
+                "valuetype": "integer",
+                "resetvalue": "4096",
+                "description": "Sets the maximum memory to be used for query workspaces.",
+                "settingname": "work_mem",
+                "settingvalue": "4096",
+                "pendingrestart": false
+            }
+        ],
+        "DatabaseStatistics": {
+            "conflicts": 0,
+            "deadlocks": 0,
+            "tempbytes": "0 bytes",
+            "tempfiles": 0,
+            "databasename": "postgres",
+            "tempbytesraw": 0,
+            "tuplesdeleted": 1383,
+            "tuplesfetched": 42380,
+            "tuplesupdated": 283,
+            "tuplesinserted": 2529,
+            "tuplesreturned": 244737,
+            "blockreadtimems": 0,
+            "cachehitpercent": 99.12,
+            "currentbackends": 2,
+            "blockshitincache": 79643,
+            "blockwritetimems": 0,
+            "blocksreadfromdisk": 709,
+            "statisticsresettime": null,
+            "transactionscommitted": 819,
+            "transactionsrolledback": 0
+        },
+        "DistributionDetection": {
+            "detectionnote": "Best-effort detection from SQL only. Validate with customer/provider documentation when required.",
+            "hasrdsadminrole": false,
+            "hasawss3extension": false,
+            "postgresqlversion": "18.6",
+            "detectionconfidence": "Best-effort detection",
+            "hasazurepgadminrole": false,
+            "hasrdsadmindatabase": false,
+            "hasrdstoolsextension": false,
+            "postgresqlversionnum": "180006",
+            "hasawscommonsextension": false,
+            "hasazurestorageextension": false,
+            "hascloudsqlsuperuserrole": false,
+            "rdsextensionssettingexists": false,
+            "edbredwooddatesettingexists": false,
+            "azureextensionssettingexists": false,
+            "haspgstatstatementsextension": false,
+            "postgresqldistributionflavor": "PostgreSQL Community or unknown distribution",
+            "cloudsqlpglogicalsettingexists": false,
+            "hasgooglemlintegrationextension": false
+        },
+        "CurrentDatabaseSession": {
+            "timezone": "Asia/Jerusalem",
+            "datestyle": "ISO, MDY",
+            "searchpath": "\"$user\", public",
+            "locktimeout": "0",
+            "databasename": "postgres",
+            "intervalstyle": "postgres",
+            "clientencoding": "UTF8",
+            "serverencoding": "UTF8",
+            "statementtimeout": "0",
+            "transactionreadonly": "off",
+            "standardconformingstrings": "on",
+            "currenttransactionisolation": "read committed",
+            "defaulttransactionisolation": "read committed",
+            "idleintransactionsessiontimeout": "0"
+        }
+    },
+    "PostgreSQLClusterName": "Not provided",
+    "FailedChecksThatRequireAttention": [
+        {
+            "Scope": "Cluster-level",
+            "Title": "WAL Archiving is Disabled",
+            "Impact": 3,
+            "CheckId": 51,
+            "Category": "Backup and Recovery",
+            "AdditionalInfo": {
+                "WalLevel": "replica",
+                "ArchiveMode": "off",
+                "FindingReason": "archive_mode is disabled, so PostgreSQL is not archiving WAL segments for point-in-time recovery.",
+                "ArchiveCommand": "(disabled)"
+            },
+            "Recommendation": "Enable WAL archiving if point-in-time recovery is required for this PostgreSQL server.",
+            "WorstCaseImpact": 3,
+            "RecommendationRisk": 3,
+            "ResponsibleDbaTeam": "Production",
+            "RecommendationEffort": 2
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "statement_timeout is Not Configured",
+            "Impact": 3,
+            "CheckId": 36,
+            "Category": "Configuration",
+            "AdditionalInfo": {
+                "FindingReason": "statement_timeout is set to 0, allowing queries to run without a timeout.",
+                "StatementTimeout": "0"
+            },
+            "Recommendation": "Consider configuring statement_timeout to prevent runaway queries from consuming resources indefinitely.",
+            "WorstCaseImpact": 3,
+            "RecommendationRisk": 2,
+            "ResponsibleDbaTeam": "Production",
+            "RecommendationEffort": 2
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "temp_file_limit is Not Configured",
+            "Impact": 3,
+            "CheckId": 75,
+            "Category": "Configuration",
+            "AdditionalInfo": {
+                "FindingReason": "temp_file_limit is set to -1 (unlimited), so a single query or session generating excessive temporary files -- a large sort, hash join, or hash aggregate that spills past work_mem, often from a missing index, a bad plan, or an unbounded report -- can consume all remaining disk space on the temporary file volume. Because that volume is typically shared with WAL and/or table data, filling it can halt writes or crash every database on the instance, not only the session that caused it.",
+                "TempFileLimit": "-1"
+            },
+            "Recommendation": "Configure temp_file_limit to a value that bounds per-session temporary file usage without interrupting legitimate large sorts, reports, or batch jobs; review observed temp file usage first, consider role/database-level overrides for known heavy workloads, and test before enforcing in production.",
+            "WorstCaseImpact": 3,
+            "RecommendationRisk": 2,
+            "ResponsibleDbaTeam": "Production",
+            "RecommendationEffort": 1
+        },
+        {
+            "Scope": "Cluster/database-level",
+            "Title": "pg_stat_statements is Missing or Not Fully Enabled",
+            "Impact": 3,
+            "CheckId": 1,
+            "Category": "Observability",
+            "AdditionalInfo": {
+                "Note": "pg_stat_statements requires both cluster-level preload configuration and database-level extension creation.",
+                "FindingReason": "pg_stat_statements is not listed in shared_preload_libraries.",
+                "CurrentDatabase": "postgres",
+                "SharedPreloadLibraries": "",
+                "PgStatStatementsViewVisible": false,
+                "LoadedInSharedPreloadLibraries": false,
+                "ExtensionInstalledInCurrentDatabase": false
+            },
+            "Recommendation": "Enable pg_stat_statements in a controlled way to support workload-level query analysis. This may require shared_preload_libraries configuration and a PostgreSQL restart depending on the environment. The extension must also be created in each relevant database where query statistics are required.",
+            "WorstCaseImpact": 3,
+            "RecommendationRisk": 1,
+            "ResponsibleDbaTeam": "Production",
+            "RecommendationEffort": 2
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "idle_in_transaction_session_timeout is Not Configured",
+            "Impact": 3,
+            "CheckId": 35,
+            "Category": "Configuration",
+            "AdditionalInfo": {
+                "FindingReason": "idle_in_transaction_session_timeout is set to 0, meaning idle transactions are allowed to remain open indefinitely.",
+                "IdleInTransactionSessionTimeout": "0"
+            },
+            "Recommendation": "Configure idle_in_transaction_session_timeout to prevent idle transactions from remaining open indefinitely.",
+            "WorstCaseImpact": 3,
+            "RecommendationRisk": 1,
+            "ResponsibleDbaTeam": "Production",
+            "RecommendationEffort": 1
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "Synchronous Replication Configuration Review",
+            "Impact": 2,
+            "CheckId": 55,
+            "Category": "Replication",
+            "AdditionalInfo": {
+                "FindingReason": "synchronous_standby_names is empty, so no synchronous standby requirement is configured.",
+                "ReplicationState": [
+                ],
+                "SynchronousCommit": "on",
+                "HasConnectedStandby": false,
+                "HasSynchronousStandby": false,
+                "SynchronousStandbyNames": ""
+            },
+            "Recommendation": "Review synchronous replication configuration against business RPO/RTO requirements and confirm whether synchronous standby behavior is expected.",
+            "WorstCaseImpact": 2,
+            "RecommendationRisk": 2,
+            "ResponsibleDbaTeam": "Production",
+            "RecommendationEffort": 2
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "random_page_cost May Not Be Tuned",
+            "Impact": 2,
+            "CheckId": 63,
+            "Category": "Configuration",
+            "AdditionalInfo": {
+                "Thresholds": {
+                    "SpinningDiskDefault": 4.0,
+                    "TypicalSsdRecommendation": 1.1,
+                    "FlaggedWhenRandomOverSeqRatioAbove": 2
+                },
+                "SeqPageCost": 1,
+                "FindingReason": "random_page_cost is more than twice seq_page_cost (the traditional spinning-disk assumption). On SSD, flash, or cloud block storage this can bias the planner toward sequential scans instead of index scans.",
+                "RandomPageCost": 4,
+                "RandomToSeqRatio": 4.00
+            },
+            "Recommendation": "According to PostgreSQL documentation and community best practices, review random_page_cost against the underlying storage. The default of 4.0 models spinning disks; for SSD, flash, or cloud block storage a value near 1.1 (close to seq_page_cost) is commonly recommended so the planner does not over-penalize index/random access. Confirm the storage type, then adjust and validate query plans. This is a cluster-wide, reloadable change (no restart) affecting all query planning, so test representative queries before and after.",
+            "WorstCaseImpact": 2,
+            "RecommendationRisk": 2,
+            "ResponsibleDbaTeam": "Production",
+            "RecommendationEffort": 1
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "lock_timeout is Not Configured",
+            "Impact": 2,
+            "CheckId": 37,
+            "Category": "Configuration",
+            "AdditionalInfo": {
+                "LockTimeout": "0",
+                "FindingReason": "lock_timeout is set to 0, allowing sessions to wait indefinitely for locks."
+            },
+            "Recommendation": "Consider configuring lock_timeout to prevent sessions from waiting indefinitely on lock contention.",
+            "WorstCaseImpact": 2,
+            "RecommendationRisk": 1,
+            "ResponsibleDbaTeam": "Production",
+            "RecommendationEffort": 1
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "WAL Compression is Disabled",
+            "Impact": 2,
+            "CheckId": 60,
+            "Category": "WAL and Checkpoints",
+            "AdditionalInfo": {
+                "WalLevel": "replica",
+                "MaxWalSize": "1GB",
+                "ArchiveMode": "off",
+                "FindingReason": "wal_compression is disabled, so full-page images written to WAL are not compressed.",
+                "FullPageWrites": "on",
+                "WalCompression": "off"
+            },
+            "Recommendation": "Review WAL volume and consider enabling wal_compression if full-page-image WAL volume, archive storage, or replication bandwidth is significant.",
+            "WorstCaseImpact": 2,
+            "RecommendationRisk": 1,
+            "ResponsibleDbaTeam": "Production",
+            "RecommendationEffort": 1
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "User Tables Without Primary Key",
+            "Impact": 1,
+            "CheckId": 30,
+            "Category": "Data Modeling",
+            "AdditionalInfo": {
+                "FindingReason": "One or more user tables do not have a primary key.",
+                "UserTablesWithoutPrimaryKey": [
+                    {
+                        "TableName": "pg_review_header_important_settings",
+                        "SchemaName": "pg_temp_3",
+                        "RelationKind": "r",
+                        "TableSizeBytes": 49152,
+                        "EstimatedLiveRows": 0
+                    },
+                    {
+                        "TableName": "pg_review_header_tablespaces",
+                        "SchemaName": "pg_temp_3",
+                        "RelationKind": "r",
+                        "TableSizeBytes": 16384,
+                        "EstimatedLiveRows": 0
+                    },
+                    {
+                        "TableName": "pg_review_header_host_visibility",
+                        "SchemaName": "pg_temp_3",
+                        "RelationKind": "r",
+                        "TableSizeBytes": 16384,
+                        "EstimatedLiveRows": 0
+                    },
+                    {
+                        "TableName": "pg_review_header_extensions",
+                        "SchemaName": "pg_temp_3",
+                        "RelationKind": "r",
+                        "TableSizeBytes": 16384,
+                        "EstimatedLiveRows": 0
+                    },
+                    {
+                        "TableName": "pg_review_header_licensing",
+                        "SchemaName": "pg_temp_3",
+                        "RelationKind": "r",
+                        "TableSizeBytes": 16384,
+                        "EstimatedLiveRows": 0
+                    },
+                    {
+                        "TableName": "pg_review_header_database_statistics",
+                        "SchemaName": "pg_temp_3",
+                        "RelationKind": "r",
+                        "TableSizeBytes": 16384,
+                        "EstimatedLiveRows": 0
+                    },
+                    {
+                        "TableName": "pg_review_header_capabilities",
+                        "SchemaName": "pg_temp_3",
+                        "RelationKind": "r",
+                        "TableSizeBytes": 16384,
+                        "EstimatedLiveRows": 0
+                    },
+                    {
+                        "TableName": "pg_review_header_databases",
+                        "SchemaName": "pg_temp_3",
+                        "RelationKind": "r",
+                        "TableSizeBytes": 16384,
+                        "EstimatedLiveRows": 0
+                    },
+                    {
+                        "TableName": "pg_review_header_execution_context",
+                        "SchemaName": "pg_temp_3",
+                        "RelationKind": "r",
+                        "TableSizeBytes": 16384,
+                        "EstimatedLiveRows": 0
+                    },
+                    {
+                        "TableName": "pg_review_header_replication_state",
+                        "SchemaName": "pg_temp_3",
+                        "RelationKind": "r",
+                        "TableSizeBytes": 16384,
+                        "EstimatedLiveRows": 0
+                    },
+                    {
+                        "TableName": "pg_review_header_current_database_session",
+                        "SchemaName": "pg_temp_3",
+                        "RelationKind": "r",
+                        "TableSizeBytes": 16384,
+                        "EstimatedLiveRows": 0
+                    },
+                    {
+                        "TableName": "pg_review_header_distribution_detection",
+                        "SchemaName": "pg_temp_3",
+                        "RelationKind": "r",
+                        "TableSizeBytes": 16384,
+                        "EstimatedLiveRows": 0
+                    },
+                    {
+                        "TableName": "pg_review_header_server_identity",
+                        "SchemaName": "pg_temp_3",
+                        "RelationKind": "r",
+                        "TableSizeBytes": 16384,
+                        "EstimatedLiveRows": 0
+                    },
+                    {
+                        "TableName": "pg_review_errors",
+                        "SchemaName": "pg_temp_3",
+                        "RelationKind": "r",
+                        "TableSizeBytes": 8192,
+                        "EstimatedLiveRows": 0
+                    },
+                    {
+                        "TableName": "pg_review_header_activity_summary",
+                        "SchemaName": "pg_temp_3",
+                        "RelationKind": "r",
+                        "TableSizeBytes": 8192,
+                        "EstimatedLiveRows": 0
+                    },
+                    {
+                        "TableName": "pg_review_header_errors",
+                        "SchemaName": "pg_temp_3",
+                        "RelationKind": "r",
+                        "TableSizeBytes": 8192,
+                        "EstimatedLiveRows": 0
+                    }
+                ]
+            },
+            "Recommendation": "Review user tables without primary keys and add an appropriate primary key where application design allows.",
+            "WorstCaseImpact": 2,
+            "RecommendationRisk": 1,
+            "ResponsibleDbaTeam": "Production",
+            "RecommendationEffort": 1
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "track_io_timing is Disabled",
+            "Impact": 1,
+            "CheckId": 38,
+            "Category": "Observability",
+            "AdditionalInfo": {
+                "FindingReason": "track_io_timing is disabled, so PostgreSQL is not collecting I/O timing statistics.",
+                "TrackIOTiming": "off"
+            },
+            "Recommendation": "Consider enabling track_io_timing to improve visibility into PostgreSQL I/O latency and performance bottlenecks.",
+            "WorstCaseImpact": 2,
+            "RecommendationRisk": 1,
+            "ResponsibleDbaTeam": "Production",
+            "RecommendationEffort": 1
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "log_temp_files is Disabled",
+            "Impact": 1,
+            "CheckId": 39,
+            "Category": "Observability",
+            "AdditionalInfo": {
+                "LogTempFiles": "-1",
+                "FindingReason": "log_temp_files is disabled (-1), so temporary file creation is not being logged."
+            },
+            "Recommendation": "Consider enabling log_temp_files to help identify queries that spill to disk and generate excessive temporary I/O.",
+            "WorstCaseImpact": 2,
+            "RecommendationRisk": 1,
+            "ResponsibleDbaTeam": "Production",
+            "RecommendationEffort": 1
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "Slow Statement Logging is Disabled",
+            "Impact": 1,
+            "CheckId": 40,
+            "Category": "Observability",
+            "AdditionalInfo": {
+                "FindingReason": "log_min_duration_statement is disabled (-1), so slow statements are not being logged.",
+                "LogMinDurationStatement": "-1"
+            },
+            "Recommendation": "Consider configuring log_min_duration_statement to capture long-running queries and improve performance troubleshooting capabilities.",
+            "WorstCaseImpact": 2,
+            "RecommendationRisk": 1,
+            "ResponsibleDbaTeam": "Production",
+            "RecommendationEffort": 1
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "log_lock_waits is Disabled",
+            "Impact": 1,
+            "CheckId": 41,
+            "Category": "Observability",
+            "AdditionalInfo": {
+                "LogLockWaits": "off",
+                "FindingReason": "log_lock_waits is disabled, so PostgreSQL is not logging long lock waits.",
+                "DeadlockTimeout": "1s"
+            },
+            "Recommendation": "Enable log_lock_waits to improve visibility into lock contention and long lock waits.",
+            "WorstCaseImpact": 2,
+            "RecommendationRisk": 1,
+            "ResponsibleDbaTeam": "Production",
+            "RecommendationEffort": 1
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "Connection Logging Is Disabled",
+            "Impact": 1,
+            "CheckId": 64,
+            "Category": "Observability",
+            "AdditionalInfo": {
+                "FindingReason": "log_connections is disabled, so successful and attempted connections are not recorded. Connection/disconnection logging is important for security auditing and for correlating sessions in the logs.",
+                "LogConnections": "off",
+                "LogDisconnections": "off"
+            },
+            "Recommendation": "According to PostgreSQL logging best practices, enable connection logging for security auditing and session correlation. Set log_connections (on PostgreSQL 18 it accepts a list of aspects such as 'all'; earlier versions are boolean) and consider log_disconnections for session duration. These are reloadable (no restart) but increase log volume, so plan log storage and rotation. If connection auditing is handled by an external proxy or platform layer, confirm that before enabling it at the server.",
+            "WorstCaseImpact": 2,
+            "RecommendationRisk": 1,
+            "ResponsibleDbaTeam": "Production",
+            "RecommendationEffort": 1
+        }
+    ],
+    "PassedChecksThatDoNotRequireAttention": [
+        {
+            "Scope": "Cluster-level",
+            "Title": "Autovacuum is Disabled Globally",
+            "CheckId": 2,
+            "Category": "Maintenance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Object-level",
+            "Title": "Tables with Autovacuum Disabled",
+            "CheckId": 3,
+            "Category": "Maintenance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Object-level",
+            "Title": "Tables with High Dead Tuple Ratio",
+            "CheckId": 4,
+            "Category": "Maintenance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Object-level",
+            "Title": "Large Tables Without Recent Autovacuum or Autoanalyze",
+            "CheckId": 5,
+            "Category": "Maintenance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster/session-level",
+            "Title": "Long Running Active Queries",
+            "CheckId": 6,
+            "Category": "Concurrency",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster/session-level",
+            "Title": "Sessions Idle in Transaction",
+            "CheckId": 7,
+            "Category": "Concurrency",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Object-level",
+            "Title": "User Tables Without Any Index",
+            "CheckId": 8,
+            "Category": "Indexing",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Object-level",
+            "Title": "Tables with Stale or Missing Statistics",
+            "CheckId": 9,
+            "Category": "Statistics",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Object-level",
+            "Title": "Approximate Table Bloat Indicators",
+            "CheckId": 10,
+            "Category": "Maintenance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Object-level",
+            "Title": "Large Indexes with Zero Scans",
+            "CheckId": 11,
+            "Category": "Indexing",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "Connection Usage is High",
+            "CheckId": 12,
+            "Category": "Connections",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Lock Waits and Blocking Chains Detected",
+            "CheckId": 13,
+            "Category": "Concurrency",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Long Running Transactions",
+            "CheckId": 14,
+            "Category": "Transactions",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Oldest Transaction Age is High",
+            "CheckId": 15,
+            "Category": "Transactions",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "High Temporary File Usage",
+            "CheckId": 16,
+            "Category": "Performance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "Replication Slots Retaining Significant WAL",
+            "CheckId": 17,
+            "Category": "Replication",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Tables Approaching Transaction ID Wraparound",
+            "CheckId": 18,
+            "Category": "Maintenance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "Databases Approaching Transaction ID Wraparound",
+            "CheckId": 19,
+            "Category": "Maintenance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "Prepared Transactions Exist",
+            "CheckId": 20,
+            "Category": "Transactions",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Database Statistics Reset Time is Recent",
+            "CheckId": 21,
+            "Category": "Observability",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Deadlocks Detected",
+            "CheckId": 22,
+            "Category": "Concurrency",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "High Rollback Ratio",
+            "CheckId": 23,
+            "Category": "Transactions",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "High Cache Miss Ratio",
+            "CheckId": 24,
+            "Category": "Performance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "work_mem Configuration Risk",
+            "CheckId": 25,
+            "Category": "Configuration",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Foreign Keys Without Supporting Indexes",
+            "CheckId": 26,
+            "Category": "Performance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Invalid Indexes",
+            "CheckId": 27,
+            "Category": "Maintenance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Duplicate Index Candidates",
+            "CheckId": 28,
+            "Category": "Performance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Overlapping Index Candidates",
+            "CheckId": 29,
+            "Category": "Performance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "max_connections Configuration Risk",
+            "CheckId": 31,
+            "Category": "Configuration",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "shared_buffers Appears Very Small",
+            "CheckId": 32,
+            "Category": "Configuration",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "effective_cache_size Appears Very Small",
+            "CheckId": 33,
+            "Category": "Configuration",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "maintenance_work_mem Appears Too Low",
+            "CheckId": 34,
+            "Category": "Configuration",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "log_checkpoints is Disabled",
+            "CheckId": 42,
+            "Category": "Observability",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "log_autovacuum_min_duration is Disabled",
+            "CheckId": 43,
+            "Category": "Observability",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "Autovacuum Worker Capacity Review",
+            "CheckId": 44,
+            "Category": "Maintenance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "Autovacuum Naptime Review",
+            "CheckId": 45,
+            "Category": "Maintenance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Autovacuum Scale Factor Review for Large Tables",
+            "CheckId": 46,
+            "Category": "Maintenance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Large Tables with No Recent Analyze",
+            "CheckId": 47,
+            "Category": "Maintenance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Large Tables with No Recent Vacuum",
+            "CheckId": 48,
+            "Category": "Maintenance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Tables with High Insert Update Delete Activity",
+            "CheckId": 49,
+            "Category": "Maintenance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Tables with High Sequential Scan Activity",
+            "CheckId": 50,
+            "Category": "Performance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "WAL Archiving Failures",
+            "CheckId": 52,
+            "Category": "Backup and Recovery",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "Inactive Replication Slots",
+            "CheckId": 53,
+            "Category": "Replication",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "Replication Lag Detected",
+            "CheckId": 54,
+            "Category": "Replication",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "wal_level Configuration Review",
+            "CheckId": 56,
+            "Category": "Replication",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "max_wal_size Appears Too Small",
+            "CheckId": 57,
+            "Category": "WAL and Checkpoints",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "Checkpoint Pressure Detected",
+            "CheckId": 58,
+            "Category": "WAL and Checkpoints",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "High Requested Checkpoint Ratio",
+            "CheckId": 59,
+            "Category": "WAL and Checkpoints",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "Pending Restart Settings",
+            "CheckId": 61,
+            "Category": "Configuration",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "Autovacuum Cost Delay Is Higher Than Recommended",
+            "CheckId": 62,
+            "Category": "Maintenance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "Parallel Query Is Effectively Disabled",
+            "CheckId": 65,
+            "Category": "Performance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "Data Durability Settings Are Disabled",
+            "CheckId": 66,
+            "Category": "Configuration",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Schemas Granting CREATE Privilege to PUBLIC",
+            "CheckId": 67,
+            "Category": "Security",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "Data Checksums Are Disabled",
+            "CheckId": 68,
+            "Category": "Data Integrity",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "Version and Patching",
+            "CheckId": 69,
+            "Category": "Version and Patching",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Sequences Approaching Maximum Value",
+            "CheckId": 70,
+            "Category": "Data Modeling",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "SECURITY DEFINER Functions Without a Fixed search_path",
+            "CheckId": 71,
+            "Category": "Security",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "Databases Approaching MultiXact ID Wraparound",
+            "CheckId": 72,
+            "Category": "Maintenance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster/database-level",
+            "Title": "max_locks_per_transaction Configuration Risk",
+            "CheckId": 73,
+            "Category": "Configuration",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Unlogged Tables Holding Non-Trivial Data",
+            "CheckId": 74,
+            "Category": "Data Integrity",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "password_encryption is Set to md5",
+            "CheckId": 76,
+            "Category": "Security",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Published Tables Without Adequate REPLICA IDENTITY",
+            "CheckId": 77,
+            "Category": "Replication",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Collation Version Mismatches Detected",
+            "CheckId": 78,
+            "Category": "Data Integrity",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "max_wal_senders Configuration Risk",
+            "CheckId": 79,
+            "Category": "Replication",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Extensions With an Outdated Installed Version",
+            "CheckId": 80,
+            "Category": "Version and Patching",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Constraints Marked NOT VALID (Never Validated)",
+            "CheckId": 81,
+            "Category": "Data Integrity",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Unpopulated Materialized Views",
+            "CheckId": 82,
+            "Category": "Maintenance",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Cluster-level",
+            "Title": "PostgreSQL Minor Version Is Behind on Security Patches",
+            "CheckId": 83,
+            "Category": "Version and Patching",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "FDW User Mappings Storing Plaintext Passwords",
+            "CheckId": 84,
+            "Category": "Security",
+            "AdditionalInfo": {
+            }
+        },
+        {
+            "Scope": "Database-level",
+            "Title": "Disabled Logical Replication Subscriptions",
+            "CheckId": 85,
+            "Category": "Replication",
+            "AdditionalInfo": {
+            }
+        }
+    ]
+}

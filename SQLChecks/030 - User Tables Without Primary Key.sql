@@ -36,6 +36,9 @@ v_AdditionalInfo := (
             ON st.relid = cls.oid
         WHERE cls.relkind IN ('r', 'p')
           AND nsp.nspname NOT IN ('pg_catalog', 'information_schema')
+          AND nsp.nspname NOT LIKE 'pg\_temp\_%' ESCAPE '\'
+          AND nsp.nspname NOT LIKE 'pg\_toast%' ESCAPE '\'
+          AND cls.relname NOT LIKE 'pg\_review\_%' ESCAPE '\'
           AND NOT EXISTS (
               SELECT 1
               FROM pg_constraint con
