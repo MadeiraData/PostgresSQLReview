@@ -1,0 +1,1 @@
+powershell.exe -ExecutionPolicy Bypass -File "C:\Users\SagiVaknin\PostgresSQLReview\Report\Scripts\Generate-PostgreSQLReviewReport.ps1" -CustomerName "Test" -InputFolder "C:\Users\SagiVaknin\PostgresSQLReview\Report\Customer data\Test" -OutputRoot "C:\Users\SagiVaknin\PostgresSQLReview\Report\Customer data\Test" -TestScriptsFolder "C:\Users\SagiVaknin\PostgresSQLReview\SQLChecks"
