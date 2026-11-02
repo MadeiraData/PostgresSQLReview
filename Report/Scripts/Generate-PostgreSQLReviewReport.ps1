@@ -5,7 +5,8 @@
 .DESCRIPTION
     Reads all *.json files located in the same folder as this script (or in
     -InputFolder). Each JSON file holds the PostgreSQL review results for one
-    database; the file name (without extension) is treated as the database name.
+    database; the database name is taken from the JSON "CurrentDatabase" field,
+    falling back to the file name (without extension) when it is missing.
 
     The review JSON is produced by a SQL export that concatenates fixed-width
     string fragments, so every physical line is space-padded and ends with a
@@ -357,6 +358,9 @@ function Get-ReviewFiles {
             continue
         }
         if ($null -eq $parsed) { continue }
+        # Prefer the real database name recorded by the review script; the file name is only a fallback.
+        $currentDb = Get-FirstProperty -Object $parsed -Names @('CurrentDatabase') -Default $null
+        if ($currentDb) { $dbName = [string]$currentDb }
         $result += [PSCustomObject]@{ Database = $dbName; Root = $parsed }
     }
     return $result
