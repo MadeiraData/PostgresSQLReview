@@ -18,7 +18,8 @@
 
     Expected flow:
         Template_Header.sql
-        SQLChecks\*.sql
+        SQLChecks\*.sql      (each wrapped in Check_Header.sql / Check_Footer.sql)
+        SQLInsights\*.sql    (each wrapped in Insight_Header.sql / Insight_Footer.sql)
         Template_Footer.sql
 
     Notes:
@@ -289,6 +290,31 @@ header_errors AS
         ) AS HeaderErrors
     FROM pg_review_header_errors
 ),
+performance_insights AS
+(
+    SELECT
+        COALESCE
+        (
+            jsonb_agg
+            (
+                jsonb_build_object
+                (
+                    'InsightId', InsightId,
+                    'Title', Title,
+                    'TopicArea', TopicArea,
+                    'Scope', Scope,
+                    'Status', Status,
+                    'Message', Message,
+                    'RowCount', RowCount,
+                    'Columns', Columns,
+                    'Rows', Rows
+                )
+                ORDER BY InsightId ASC
+            ),
+            '[]'::jsonb
+        ) AS PerformanceInsights
+    FROM pg_review_insights
+),
 review_warnings AS
 (
     SELECT jsonb_build_array
@@ -363,7 +389,10 @@ SELECT
                 check_errors.CheckErrors,
 
             'HeaderErrors',
-                header_errors.HeaderErrors
+                header_errors.HeaderErrors,
+
+            'PerformanceInsights',
+                performance_insights.PerformanceInsights
         )
     ) AS postgresql_review_json
 FROM score
@@ -374,4 +403,5 @@ CROSS JOIN review_warnings
 CROSS JOIN failed_checks
 CROSS JOIN passed_checks
 CROSS JOIN check_errors
-CROSS JOIN header_errors;
+CROSS JOIN header_errors
+CROSS JOIN performance_insights;
