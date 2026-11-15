@@ -51,7 +51,12 @@ if ((Test-Path -Path $InsightTemplateHeaderFilePath) -and (Test-Path -Path $Insi
 
     [int]$InsightId = 0
 
-    Get-ChildItem -Path $InsightScriptsFolderPath -Include $InsightScriptsFilter -ErrorAction SilentlyContinue | ForEach-Object {
+    # Filter by name rather than -Include: Windows PowerShell 5.1 returns nothing
+    # for -Include combined with a multi-level wildcard path (for example the brain
+    # repo's proposed-insights\2026-*\*\* used to preview proposed insights).
+    Get-ChildItem -Path $InsightScriptsFolderPath -ErrorAction SilentlyContinue |
+        Where-Object { -not $_.PSIsContainer -and $_.Name -like $InsightScriptsFilter } |
+        Sort-Object FullName | ForEach-Object {
         $InsightId += 1
         $InsightTitle = $_.BaseName -replace '^\d+\s*-\s*', ''
         Write-Output "Insight $InsightId : $InsightTitle"
