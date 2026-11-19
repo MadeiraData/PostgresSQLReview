@@ -89,6 +89,7 @@
     DROP TABLE IF EXISTS pg_review_header_errors;
     DROP TABLE IF EXISTS pg_review_results;
     DROP TABLE IF EXISTS pg_review_errors;
+    DROP TABLE IF EXISTS pg_review_insights;
 
 /*
     ====================================================================================
@@ -355,6 +356,21 @@
         ErrorContext        text,
         IsDeadlockRetry     boolean DEFAULT false,
         ErrorTime           timestamptz DEFAULT now()
+    );
+
+    -- Temp table for PostgreSQL Review Performance Insight results. One row per insight.
+    -- Columns keeps the insight's column order (jsonb re-sorts the keys inside Rows).
+    CREATE TEMP TABLE pg_review_insights
+    (
+        InsightId           integer PRIMARY KEY,
+        Title               text NOT NULL,
+        TopicArea           text NOT NULL,
+        Scope               text NOT NULL,
+        Status              text NOT NULL,       -- OK | RequirementsNotMet | Error
+        Message             text,
+        RowCount            integer NOT NULL DEFAULT 0,
+        Columns             jsonb NOT NULL DEFAULT '[]'::jsonb,
+        Rows                jsonb NOT NULL DEFAULT '[]'::jsonb
     );
 
 /*

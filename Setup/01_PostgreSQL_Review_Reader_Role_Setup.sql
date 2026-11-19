@@ -75,7 +75,7 @@
 DO $$
 DECLARE
     p_healthcheck_role_name text := 'review_reader';
-    p_healthcheck_password  text := '9XVRTPfmjJkdZIGZQG9j';
+    p_healthcheck_password  text := 'CHANGE_ME_STRONG_PASSWORD';   -- never commit a real password; this repo is public
 
     p_grant_access_to_all_databases boolean := true;
 

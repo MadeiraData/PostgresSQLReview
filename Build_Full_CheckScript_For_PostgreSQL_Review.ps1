@@ -7,6 +7,10 @@
 ,[string]$CheckTemplateFooterFilePath = "Template/Check_Footer.sql"
 ,[string]$CheckScriptsFolderPath = "SQLChecks\*"
 ,[string]$CheckScriptsFilter = "*.sql"
+,[string]$InsightTemplateHeaderFilePath = "Template/Insight_Header.sql"
+,[string]$InsightTemplateFooterFilePath = "Template/Insight_Footer.sql"
+,[string]$InsightScriptsFolderPath = "SQLInsights\*"
+,[string]$InsightScriptsFilter = "*.sql"
 )
 
 Set-ExecutionPolicy Bypass -Scope Process -Force
@@ -29,6 +33,57 @@ Get-ChildItem -Path $CheckScriptsFolderPath -Include $CheckScriptsFilter | ForEa
     $OutputScriptBuilder += $CheckHeaderTemplate.Replace('{CheckId}', $CheckId).Replace('{CheckTitle}', $CheckTitle)
     $OutputScriptBuilder += [string](Get-Content -Path $_.FullName -Raw).Replace('{CheckId}', $CheckId).Replace('{CheckTitle}', $CheckTitle)
     $OutputScriptBuilder += $CheckFooterTemplate.Replace('{CheckId}', $CheckId).Replace('{CheckTitle}', $CheckTitle)
+}
+
+# Performance Insights: standalone ranked SELECTs. Each one is wrapped so that its
+# result set is stored in pg_review_insights and returned in the review JSON's
+# PerformanceInsights array. Scope, Topic Area and Requires Extension are read
+# from the insight's header comment.
+function Get-InsightHeaderValue([string]$Text, [string]$Label) {
+    $m = [regex]::Match($Text, '(?im)^\s*' + [regex]::Escape($Label) + '\s*:\s*(?<v>[^\r\n]+)')
+    if ($m.Success) { return $m.Groups['v'].Value.Trim() }
+    return ''
+}
+
+if ((Test-Path -Path $InsightTemplateHeaderFilePath) -and (Test-Path -Path $InsightTemplateFooterFilePath)) {
+    $InsightHeaderTemplate = [string](Get-Content -Path $InsightTemplateHeaderFilePath -Raw)
+    $InsightFooterTemplate = [string](Get-Content -Path $InsightTemplateFooterFilePath -Raw)
+
+    [int]$InsightId = 0
+
+    # Filter by name rather than -Include: Windows PowerShell 5.1 returns nothing
+    # for -Include combined with a multi-level wildcard path (for example the brain
+    # repo's proposed-insights\2026-*\*\* used to preview proposed insights).
+    Get-ChildItem -Path $InsightScriptsFolderPath -ErrorAction SilentlyContinue |
+        Where-Object { -not $_.PSIsContainer -and $_.Name -like $InsightScriptsFilter } |
+        Sort-Object FullName | ForEach-Object {
+        $InsightId += 1
+        $InsightTitle = $_.BaseName -replace '^\d+\s*-\s*', ''
+        Write-Output "Insight $InsightId : $InsightTitle"
+
+        $InsightBody = [string](Get-Content -Path $_.FullName -Raw)
+        $Scope       = Get-InsightHeaderValue $InsightBody 'Scope'
+        $TopicArea   = Get-InsightHeaderValue $InsightBody 'Topic Area'
+        $Extensions  = @((Get-InsightHeaderValue $InsightBody 'Requires Extension') -split '[,\s]+' |
+                         Where-Object { $_ -and $_ -notmatch '^(?i:none|n/a)$' })
+        foreach ($ext in $Extensions) {
+            if ($ext -notmatch '^[A-Za-z0-9_]+$') { throw "Invalid extension name '$ext' in $($_.Name)" }
+        }
+        $ExtensionsArray = if ($Extensions.Count -gt 0) { 'ARRAY[' + (($Extensions | ForEach-Object { "'$_'" }) -join ', ') + ']::text[]' } else { 'ARRAY[]::text[]' }
+
+        # The insight becomes a subquery, so its trailing ';' must go.
+        $InsightBody = $InsightBody.TrimEnd() -replace ';\s*$', ''
+
+        $Fill = {
+            param([string]$Template)
+            $Template.Replace('{InsightId}', $InsightId).Replace('{InsightTitle}', $InsightTitle).Replace('{TopicArea}', $TopicArea).Replace('{Scope}', $Scope).Replace('{RequiresExtensions}', $ExtensionsArray)
+        }
+
+        $OutputScriptBuilder += $batchSeparator
+        $OutputScriptBuilder += (& $Fill $InsightHeaderTemplate)
+        $OutputScriptBuilder += $InsightBody + "`r`n"
+        $OutputScriptBuilder += (& $Fill $InsightFooterTemplate)
+    }
 }
 
 Write-Output "Finalizing output script: $OutputScriptFilePath"
